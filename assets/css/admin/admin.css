@@ -1,0 +1,54 @@
+.modal .modal-content {
+    margin-top: 75px;
+    padding: 0 40px;
+}
+.modal h4 {
+    font-size: 1.5em;
+}
+.modal .btn {
+    margin-bottom: 25px;
+    margin-top: 5px;
+}
+.tab-pane {
+    padding-top: 20px;
+}
+
+.modal .show-grid {
+    width: 100%;
+    margin-bottom: 7px;
+}
+.modal .show-grid div {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #eee;
+    background-color: rgba(86,61,124,.15);
+    border: 1px solid #ddd;
+    border: 1px solid rgba(86,61,124,.2);
+    float: left;
+    text-align: center;
+}
+.modal .three-quarters {
+    width: 300px;
+}
+.modal .two-thirds {
+    width: 266px;
+}
+.modal .half, .modal .one-half {
+    width: 200px;
+}
+.modal .third, .modal .one-third {
+    width: 133px;
+}
+.modal .quarter, .modal .one-quarter {
+    width: 100px;
+}
+
+#optionsframework-metabox {
+    padding-top: 0;
+}
+#optionsframework .group>h3 {
+    display: none;
+}
+#optionsframework .mini .controls select, #optionsframework .section .mini .controls {
+    width: 160px;
+}

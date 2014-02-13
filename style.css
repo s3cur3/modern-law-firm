@@ -1,0 +1,43 @@
+/*
+Theme Name:         The Modern Law Firm
+Theme URI:          http://conversioninsights.net/free-wordpress-themes-law-firms/
+Description:        A clean, modern, responsive theme just for lawyers & law firms.
+Tags:               black, blue, white, light, one-column, two-columns, right-sidebar, responsive-layout, custom-background, custom-colors, custom-menu, editor-style, featured-image-header, featured-images, full-width-template, microformats, theme-options
+Version:            6.5.1
+Author:             Tyler Young
+Author URI:         http://conversioninsights.net/tyler-young
+
+License:            GPLv3
+License URI:        http://www.gnu.org/licenses/gpl-3.0.html
+*/
+
+
+
+
+/****** NOTE: *******
+
+You should *not* add your custom CSS styles here;
+this file is *not* used in the front-end. It exists
+solely to inform WordPress of the theme information
+above.
+
+Instead, add your custom CSS to the file:
+
+assets/css/custom.css
+
+(Better yet, create a child theme!)
+
+*/
+
+
+
+
+
+
+
+
+
+
+.wp-caption, .wp-caption-text, .sticky, .gallery-caption, .bypostauthor {
+    /* The WordPress theme uploader requires these. All are in assets/css/main.min.css */
+}
