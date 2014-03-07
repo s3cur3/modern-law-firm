@@ -55,7 +55,7 @@ function mlfAddAttyImgSizeNote() {
 add_action( 'add_meta_boxes', 'mlfAddAttyImgSizeNote' );
 
 function mlfPrintAttyImgSizeNote() {
-    echo "<p>Recommended size for attorney photos:<br />400&times400</p>";
+    echo "<p>Recommended size for attorney photos:<br />400&times;400</p>";
 }
 
 
@@ -107,7 +107,8 @@ function mlfGetAllAttorneys( $maxNumAttorneys = 100, $maxCharLength = -1 ) {
             'imgURL' => ($attachment ? $attachment[0] : ''),
             'imgWidth' => ($attachment ? $attachment[1] : -1),
             'imgHeight' => ($attachment ? $attachment[2] : -1),
-            'url' => get_permalink($query->post->ID)
+            'url' => get_permalink($query->post->ID),
+            'socialURLs' => getAttorneySocialURLs($query->post->ID)
         );
     }
 
@@ -135,10 +136,11 @@ function mlfGetAttorneysHTML( $attorneysPerRow = 1, $numAttorneys = 100, $headin
 
         $out = "";
         if( strlen ($attorney['imgURL']) > 0 ) {
-            $out  .= "    <a href=\"{$attorney['url']}\"><img alt=\"{$attorney['title']}\" src=\"{$attorney['imgURL']}\" width=\"{$attorney['imgWidth']}\" height=\"{$attorney['imgHeight']}\" class=\"{$imgClass}\"></a>\n";
+            $out  .= "    <a href=\"{$attorney['url']}\"><img alt=\"{$attorney['title']}\" src=\"{$attorney['imgURL']}\" width=\"{$attorney['imgWidth']}\" height=\"{$attorney['imgHeight']}\" class=\"{$imgClass}\" itemprop=\"image\"></a>\n";
         }
-        $out .= "    <h{$headingLevel}><a href=\"{$attorney['url']}\">{$attorney['title']}</a></h{$headingLevel}>\n";
+        $out .= "    <h{$headingLevel}><a href=\"{$attorney['url']}\" itemprop=\"name\">{$attorney['title']}</a></h{$headingLevel}>\n";
         $out .= "    {$attorney['content']}\n";
+        $out .= "";
         return $out;
     }
 
@@ -162,7 +164,7 @@ function mlfGetAttorneysHTML( $attorneysPerRow = 1, $numAttorneys = 100, $headin
     if( count($attorneys) > 1 ) {
         $out .= "<ul>\n";
         for( $i = 0; $i < count($attorneys); $i++ ) {
-            $out .= "<li class=\"{$liClass}\">\n";
+            $out .= "<li class=\"{$liClass}\" itemscope itemtype=\"http://schema.org/Person\">\n";
             $out .= getAttorneyInnerHTML($attorneys[$i], $headingLevel, "none");
             $out .= "</li>\n";
         }

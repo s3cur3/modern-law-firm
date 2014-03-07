@@ -1,3 +1,10 @@
+/** Fix strange bug where Screen Options won't appear **/
+#screen-options-wrap {
+    display: block !important;
+    visibility: visible !important;
+}
+
+
 .modal .modal-content {
     margin-top: 75px;
     padding: 0 40px;

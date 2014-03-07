@@ -29,11 +29,13 @@ For help & advice on your online marketing campaigns, you can sign up for my [fr
 - [Setting Up the Blog](#settinguptheblog)
 - [Creating the Contact Page](#creatingthecontactpage)
 - [Creating Landing Pages for Ad Campaigns](#creatinglandingpagesforadcampaigns)
+- [Creating a Privacy Policy](#creatingaprivacypolicy)
 - [Customizing the Theme](#customizingthetheme)
     + [Using the WordPress admin menu](#usingthewordpressadminmenu)
     + [Using HTML & CSS](#usinghtmlcss)
     + [Using Javascript](#usingjavascript)
 - [Getting Help and Support](#gettinghelpandsupport)
+- [Updates to the Theme](#updatestothetheme)
 
 Getting Started
 ------------------------------------------------------
@@ -272,6 +274,16 @@ To create a landing page with this theme, do the following:
 4. Type your page content in the WordPress editor as usual.
 
 
+Creating a Privacy Policy
+------------------------------------------------------
+
+The theme includes a boilerplate privacy policy, to the effect that your site uses analytics and may use advertising technologies present in Google AdSense. This is included largely to satisfy Google, who *claims* to require this policy to be posted on your site if you're using Google Analytics or Google AdSense. (The reality, of course, is that [no one actually does this](http://searchengineland.com/how-many-google-privacy-policies-are-you-violating-50182), but hey---we made it easy to add the Google-approved verbiage to your site.)
+
+To insert this boilerplate, simply create a new, blank page, and insert the following shortcode:
+
+`[privacy /]`
+
+...That's it!
 
 Customizing the Theme
 ------------------------------------------------------
@@ -351,6 +363,33 @@ For feature requests and bug fixes, email Tyler at <tyler@conversioninsights.net
 For custom theme development, Web marketing services, or other consulting, email Tyler at <tyler@conversioninsights.net>.
 
 
+
+Updates to the Theme
+------------------------------------------------------
+
+Here's what's been added to the theme through updates:
+
+### Version 1.1
+#### New features
+- **Custom favicon**: added the ability to upload a custom favicon. To upload a favicon (and optionally an Apple Touch Icon), do the following:
+    - Go to Appearance > Theme Options
+    - Click the **Appearance (advanced)** tab
+    - Scroll to the bottom.
+    - Upload a 16&times;16px favicon.ico to the "Favicon for Site" field.
+- **Practice areas custom post type**: Created the Practice Areas post type
+- **Attorneys custom post type**: Added optional social media links for individual attorneys (which appear both on the individual attorney's page and on the list of all attorneys)
+- **Image sliders**: Added the ability to use left- or right-aligned text in image sliders, as well as solid-colored backgrounds
+- **vCard Widget**
+    - Added Attorney Schema.org markup to the vCard widget
+    - Turned phone number in vCard widget into a link (so mobile devices can click to call it)
+- **Breadcrumbs support**: added support for Yoast SEO's breadcrumbs. To use them, all you have to do is install the Yoast SEO plugin, go to its Internal Links settings, and check the box labeled "Enable breadcrumbs."
+- **Archive template**: created template for post archives
+
+#### Bug fixes
+- Fixed bug where Screen Options wouldn't actually appear when clicked on in the Admin menu
+
+### Version 1.01
+Initial release
 
 
 

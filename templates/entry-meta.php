@@ -9,4 +9,19 @@
         <p><?php the_author_meta('description'); ?></p>
     </div>
     <p>Published <time itemprop="datePublished" datetime="<?php echo get_the_date('Y-m-d'); ?>"><?php echo get_the_date('F j, Y'); ?></time>.</p>
+
+    <?php
+    $categoryHTML = get_the_category_list( ' &bull; '  );
+    $tagHTML = get_the_tag_list('<span class="the-tags">Tagged: ',' &bull; ','</span>');
+    if( $categoryHTML || $tagHTML ) {
+        $taxonomyHTML = "<p>";
+        $taxonomyHTML .= ($categoryHTML ? "Posted in: $categoryHTML" : '' );
+        if( $categoryHTML && $tagHTML ) {
+            $taxonomyHTML .= "</p><p>";
+        }
+        $taxonomyHTML .= ($tagHTML ? $tagHTML : '' );
+        $taxonomyHTML .= "</p>";
+        echo $taxonomyHTML;
+    }
+    ?>
 </div>

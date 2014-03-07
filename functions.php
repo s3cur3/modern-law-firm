@@ -32,6 +32,14 @@ require_once locate_template('/lib/content/titles.php');
 require_once locate_template('/lib/theme/cleanup.php');
 // Custom nav modifications
 require_once locate_template('/lib/header/nav.php');
+// Custom favicon
+require_once locate_template('/lib/header/favicon.php');
+// Breadcrumbs in the page headers
+require_once locate_template('/lib/header/breadbrumbs.php');
+// Custom post type framework
+require_once locate_template('/lib/content/cptFramework.php');
+// Boilerplate Google Privacy Policy
+require_once locate_template('/lib/content/google-privacy-policy.php');
 // Custom [gallery] modifications
 require_once locate_template('/lib/content/gallery.php');
 // Custom comments modifications
@@ -61,12 +69,18 @@ require_once locate_template('/lib/content/footer/credit.php');
 require_once locate_template('/lib/content/slider.php');
 // Create attorneys post type
 require_once locate_template('/lib/content/attorneys.php');
+// Create practice areas post type
+require_once locate_template('/lib/content/practiceAreas.php');
 // Enables special features of the TinyMCE editor
 require_once locate_template('/lib/admin/editor.php');
+// Add custom meta boxes to the admin site
+require_once locate_template('/lib/admin/adminOptions.php');
 // Prints a disclaimer
 require_once locate_template('/lib/content/footer/disclaimer.php');
 // Adds prettyPhoto support to images
 require_once locate_template('/lib/content/prettyPhoto.php');
+// Enables shortcode use in places they aren't normally allowed
+require_once locate_template('/lib/content/enableShortcodes.php');
 // Modifies widgets as needed
 require_once locate_template('/lib/content/footer/footer-widgets.php');
 // The plugin recommender system
@@ -81,7 +95,7 @@ require_once locate_template('/lib/content/featured-image-attribution/featured-i
 require_once 'lib/theme/theme-updates/theme-update-checker.php';
 $example_update_checker = new ThemeUpdateChecker(
     MLF_SLUG,
-    'http://conversioninsights.net/download/themes/mlf_version_metadata.json'
+    'http://conversioninsights.net/downloads/themes/mlf_version_metadata.json'
 );
 
 
@@ -89,16 +103,17 @@ $example_update_checker = new ThemeUpdateChecker(
 
 /**
  * A wrapper for getting settings created by the Meta Box plugin.
- * @param $id string The ID (sans our theme's prefix) of the meta value you want to retrieve.
- *                   E.g., to get the "show page title" setting, pass in "show_page_title", not
+ * @param $fieldID string The ID (sans our theme's prefix) of the meta value you want to retrieve.
+ *                         E.g., to get the "show page title" setting, pass in "show_page_title", not
  *                         "mlf_show_page_title".
  * @param $valueIfNotSet mixed Whatever you want to use as the default (in the event the
  *                             requested key is not set for the current post/page)
+ * @param int $overridePostID Force us to look up the meta for a post with a specific ID
  * @return mixed The stored meta value, or $valueIfNotSet
  */
-function mlfGetNormalizedMeta( $id, $valueIfNotSet ) {
+function mlfGetNormalizedMeta( $fieldID, $valueIfNotSet, $overridePostID=null ) {
     if( function_exists('rwmb_meta') ) {
-        $field = rwmb_meta( "mlf_{$id}" );
+        $field = rwmb_meta( THEME_PREFIX . "_{$fieldID}", array(), $overridePostID );
         if( $field === "" ) {
             $field = $valueIfNotSet;
         }
@@ -108,4 +123,8 @@ function mlfGetNormalizedMeta( $id, $valueIfNotSet ) {
     }
 
 }
+
+
+// Disable extra columns for Yoast SEO plugin
+add_filter( 'wpseo_use_page_analysis', '__return_false' );
 

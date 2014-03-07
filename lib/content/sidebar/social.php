@@ -5,11 +5,34 @@
  * @param $brandStr string The "brand" name used by FontAwesome: "facebook", "twitter", "google-plus", or "linkedin"
  *                          See all icons here: http://fontawesome.io/icons/
  */
-function printSocialLink( $url, $brandStr ) {
-    echo "<a href=\"$url\" target=\"_blank\" class=\"social\"><i class=\"fa fa-2x fa-{$brandStr}-square\"></i></a>";
+function getSocialLink( $url, $brandStr ) {
+    return "<a href=\"$url\" target=\"_blank\" class=\"social\"><i class=\"fa fa-2x fa-{$brandStr}-square\"></i></a>";
 }
 
-function printSocialLinks() {
+/**
+ * Prints a list of social media links. By default, it uses the theme-wide (Options Framework-specified)
+ * URLs for Facebook, Twitter, Google+, and LinkedIn.
+ *
+ * You can override these URLs using the parameter.
+ * @param string[] $profilesOverride The URLs to use. This should be an associative array with (optional)
+ *                                   entries for 'facebook', 'twitter', 'google-plus', and 'linkedin'
+ * @param string $additionalListClass An additional class to apply to the ul tag
+ */
+function printSocialLinks( $profilesOverride=array(), $additionalListClass ) {
+    echo getSocialLinks($profilesOverride, $additionalListClass);
+}
+
+/**
+ * Returns a list of social media links. By default, it uses the theme-wide (Options Framework-specified)
+ * URLs for Facebook, Twitter, Google+, and LinkedIn.
+ *
+ * You can override these URLs using the parameter.
+ * @param string[] $profilesOverride The URLs to use. This should be an associative array with (optional)
+ *                                   entries for 'facebook', 'twitter', 'google-plus', and 'linkedin'
+ * @param string $additionalListClass An additional class to apply to the ul tag
+ * @return string An unordered list of social icons
+ */
+function getSocialLinks( $profilesOverride=array(), $additionalListClass ) {
     $profiles = array(
         "facebook" => of_get_option( 'fb' ),
         "twitter" => of_get_option('twitter'),
@@ -17,20 +40,53 @@ function printSocialLinks() {
         "linkedin" => of_get_option('linkedin')
     );
 
+    if( count($profilesOverride) > 0 ) {
+        $profiles = $profilesOverride;
+    }
+
     $class = "social-list";
     if( of_get_option('social_icons_color') ) {
         $class .= " colored";
     }
 
-    echo "<ul class=\"$class\">";
+    $out = "<ul class=\"$class {$additionalListClass}\">";
     foreach( $profiles as $key => $val ) {
         if( $val ) {
-            echo '<li class="social-profile">';
-            printSocialLink($val, $key);
-            echo '</li>';
+            $out .= '<li class="social-profile">';
+            $out .= getSocialLink($val, $key);
+            $out .= '</li>';
         }
     }
-    echo "</ul>";
+    $out .= "</ul>";
+    return $out;
+}
+
+
+/**
+ * @param int $postID The ID of the attorney "post" whose links we should look up
+ * @return string[] The override profile links to use with printSocialLinks()
+ */
+function getAttorneySocialURLs($postID=null) {
+    $arr = array(
+        'facebook' => mlfGetNormalizedMeta('facebook', '', $postID),
+        'twitter' => mlfGetNormalizedMeta('twitter', '', $postID),
+        'google-plus' => mlfGetNormalizedMeta('google-plus', '', $postID),
+        'linkedin' => mlfGetNormalizedMeta('linkedin', '', $postID),
+    );
+
+    $arrayNonEmpty = false;
+    foreach( $arr as $key => $val ) {
+        if( strlen($val) > 0 ) {
+            $arrayNonEmpty = true;
+            break;
+        }
+    }
+
+    if($arrayNonEmpty) {
+        return $arr;
+    } else {
+        return array();
+    }
 }
 
 /**

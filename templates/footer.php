@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-lg-8">
             <?php mlfPrintDisclaimer(); ?>
-            <p>&copy; <?php echo date('Y'); ?> <?php bloginfo('name'); ?> | <?php mlfPrintThemeCredit() ?></p>
+            <p>&copy; <?php echo date('Y'); ?> <?php echo do_shortcode(get_bloginfo('name')); ?> | <?php ciPrintThemeCredit(); ?></p>
         </div>
     </div>
 </div>

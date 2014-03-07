@@ -577,7 +577,7 @@ h1 .btn, h2 .btn, h3 .btn, h4 .btn {
 }
 
 
-.slider-insert, .attorneys-insert {
+.slider-insert, .attorneys-insert, .practicearea-insert {
     background: #eee url("../../img/admin/image-slider.png") center center no-repeat;
     height: 300px;
     border-radius: 15px;
@@ -586,6 +586,9 @@ h1 .btn, h2 .btn, h3 .btn, h4 .btn {
 }
 .attorneys-insert {
     background-image: url("../../img/admin/attorneys.png");
+}
+.practicearea-insert {
+    background-image: url("../../img/admin/practiceareas.png");
 }
 
 

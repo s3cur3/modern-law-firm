@@ -133,7 +133,7 @@ function mlfPrintCustomColorStyling() {
             color: <?php echo $firm_name; ?>
         }
 
-        .nsu_widget, footer, .inverted {
+        .nsu_widget, footer, .inverted, .carousel-caption.left, .carousel-caption.right {
             background: <?php echo $secondaryBG; ?>;
             color: #fff;
         }
@@ -152,10 +152,16 @@ function mlfPrintCustomColorStyling() {
         ul.social-list li a, .individual-post .meta a {
             color: <?php echo $secondaryBG; ?>;
         }
+
+        @media (max-width: 768px) {
+            .carousel-caption.left, .carousel-caption.right {
+                background: transparent;
+            }
+        }
     </style>
 <?php
 }
-add_action( 'wp_head', 'printCustomColorStyling' );
+add_action( 'wp_head', 'mlfPrintCustomColorStyling' );
 
 
 

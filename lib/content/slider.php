@@ -112,11 +112,14 @@ function mlfGetAllSlides($category, $maxNumSlides, $size) {
 
         if($attachment) {
             $slidesArray[] = array(
+                'id' => $query->post->ID,
                 'content' => $query->post->post_content,
                 'title' => $query->post->post_title,
                 'imgURL' => $attachment[0],
                 'imgWidth' => $attachment[1],
-                'imgHeight' => $attachment[2]
+                'imgHeight' => $attachment[2],
+                'contentPosition' => mlfGetNormalizedMeta('caption_position', 'center', $query->post->ID),
+                'bg' => mlfGetNormalizedMeta('caption_bg', '', $query->post->ID)
             );
         }
     }
@@ -162,10 +165,18 @@ function mlfGetSliderHTML($category = '', $numSlides = 3, $darken = true, $size 
         $out .= "<div class=\"item {$active}\">";
         $out .= "    <img alt=\"{$slide['title']}\" src=\"{$slide['imgURL']}\" width=\"{$slide['imgWidth']}\" height=\"{$slide['imgHeight']}\" class=\"{$darkenClass}\">";
         $out .= '    <div class="container">';
-        $out .= '        <div class="carousel-caption">';
-        $out .= "            <h2>{$slide['title']}</h2>";
-        $out .= "            {$slide['content']}";
-        $out .= '        </div>';
+
+        if( $slide['contentPosition'] != 'none' ) {
+            $colorStyle = "";
+            if( $slide['bg'] ) {
+                if( $slide['bg'][0] !== "#" ) $slide['bg'] = "#" . $slide['bg'];
+                $colorStyle .= " style=\"background:{$slide['bg']}\"";
+            }
+            $out .= "        <div class=\"carousel-caption {$slide['contentPosition']}\"{$colorStyle}>";
+            $out .= "            <h2>{$slide['title']}</h2>";
+            $out .= "            {$slide['content']}";
+            $out .= '        </div>';
+        }
         $out .= '    </div>';
         $out .= '</div>';
     }

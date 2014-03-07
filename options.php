@@ -113,17 +113,33 @@ function optionsframework_options() {
         'options' => array(
             'brushed_@2X' => $patternPath . 'brushed_@2X.png',
             'grey_wash_wall' => $patternPath . 'grey_wash_wall.jpg',
-            'light_grey' => $patternPath . 'light_grey',
-            'nice_snow' => $patternPath . 'nice_snow',
-            'ricepaper_v3' => $patternPath . 'ricepaper_v3',
-            'sandpaper' => $patternPath . 'sandpaper',
-            'sos' => $patternPath . 'sos',
-            'stardust_@2X' => $patternPath . 'stardust_@2X',
-            'ticks_@2X' => $patternPath . 'ticks_@2X',
-            'tweed_@2X' => $patternPath . 'tweed_@2X',
-            'witewall_3_@2X' => $patternPath . 'witewall_3_@2X',
-            'greyzz' => $patternPath . 'greyzz.png')
+            'light_grey' => $patternPath . 'light_grey.png',
+            'nice_snow' => $patternPath . 'nice_snow.png',
+            'ricepaper_v3' => $patternPath . 'ricepaper_v3.png',
+            'sandpaper' => $patternPath . 'sandpaper.png',
+            'sos' => $patternPath . 'sos.png',
+            'stardust_@2X' => $patternPath . 'stardust_@2X.png',
+            'ticks_@2X' => $patternPath . 'ticks_@2X.png',
+            'tweed_@2X' => $patternPath . 'tweed_@2X.png',
+            'witewall_3_@2X' => $patternPath . 'witewall_3_@2X.png',
+            'greyzz' => $patternPath . 'greyzz.png.png')
     );
+    $options[] = array(
+        'name' => __('Favicon for site', 'options_framework_theme'),
+        'desc' => __('A <a href="http://en.wikipedia.org/wiki/Favicon" target="_blank">favicon</a> is the little icon displayed in the page\'s tab. You can create one from a 16&times;16 image using the <a href="http://www.favicon.cc/" target="_blank">Favicon Generator</a>.', 'options_framework_theme'),
+        'id' => 'favicon',
+        'type' => 'upload');
+    $options[] = array(
+        'name' => __('Apple Touch Icon', 'options_framework_theme'),
+        'desc' => __('When someone adds your site to their home screen on an Apple device (iPhone, iPad, etc.), the <a href="https://developer.apple.com/library/ios/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html" target="_blank">Apple Touch Icon</a> is the image that will be used. (Typically, a 152&times;152 PNG is recommended.)', 'options_framework_theme'),
+        'id' => 'touch_icon',
+        'type' => 'upload');
+    $options[] = array(
+        'name' => __('Disable added effects on Apple Touch Icon?', 'options_check'),
+        'desc' => __('Disable curved border, drop shadow, etc. for Apple touch icon', 'options_check'),
+        'id' => 'touch_icon_precomposed',
+        'std' => '0',
+        'type' => 'checkbox');
 
 
 
@@ -186,7 +202,6 @@ function optionsframework_options() {
             true => 'Yes, full color',
             false => 'No, monochrome'
         ));
-
 
 
 

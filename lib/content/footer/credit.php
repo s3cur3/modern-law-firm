@@ -1,84 +1,56 @@
 <?php
 
-function mlfGetLinkWithText($url, $text) {
-    return "<a href=\"$url\" target=\"_blank\">$text</a>";
-}
-
-function mlfPrintThemeCredit() {
+function ciGetThemeCredit() {
+    function getLinkWithText($url, $text) {
+        return "<a href=\"$url\" target=\"_blank\">$text</a>";
+    }
+    
     // Print a different link based on the current page ID
     global $wp_query;
     $id = $wp_query->post->ID;
 
-    $mod = $id % 20;
-
     $root = "http://conversioninsights.net";
     $me = $root . "/tyler-young/";
+    $designServices = $root . "/services/web-design/";
     $themes = $root . "/free-wordpress-themes-law-firms/";
-    switch ($mod) {
-        case 0:
-            echo "Theme by ", mlfGetLinkWithText($root, "Conversion Insights");
-            break;
-        case 1:
-            echo mlfGetLinkWithText($themes, "Law Firm Theme"), " by Conversion Insights";
-            break;
-        case 2:
-            echo "Theme created by ", mlfGetLinkWithText($me, "Tyler Young"), " of Conversion Insights";
-            break;
-        case 3:
-            echo mlfGetLinkWithText($root, "Conversion Insights");
-            break;
-        case 4:
-            echo mlfGetLinkWithText($themes, "Free Wordpress Themes for Law Firms");
-            break;
-        case 5:
-            echo mlfGetLinkWithText($root, "Web Marketing for Law Firms"), " by Conversion Insights";
-            break;
-        case 6:
-            echo mlfGetLinkWithText($root, "Web Marketing for Law Firms");
-            break;
-        case 7:
-            echo mlfGetLinkWithText($themes, "Free Wordpress Themes for Lawyers"), " by ", mlfGetLinkWithText($root, "Conversion Insights");
-            break;
-        case 8:
-            echo mlfGetLinkWithText($themes, "Free Wordpress Themes for Law Firms"), " from ", mlfGetLinkWithText($root, "Conversion Insights");
-            break;
-        case 9:
-            echo "Theme created by ", mlfGetLinkWithText($root, "Conversion Insights");
-            break;
-        case 10:
-            echo "Law firm marketing by ", mlfGetLinkWithText($root, "Conversion Insights");
-            break;
-        case 11:
-            echo "Theme created by ", mlfGetLinkWithText($me, "Tyler Young"), " of Conversion Insights";
-            break;
-        case 12:
-            echo "Theme by ", mlfGetLinkWithText($root, "Conversion Insights");
-            break;
-        case 13:
-            echo mlfGetLinkWithText($themes, "Law Firm Theme"), " by Conversion Insights";
-            break;
-        case 14:
-            echo "Theme created by ", mlfGetLinkWithText($me, "Tyler Young"), " of Conversion Insights";
-            break;
-        case 15:
-            echo "Theme created by ", mlfGetLinkWithText($root, "Conversion Insights");
-            break;
-        case 16:
-            echo mlfGetLinkWithText($themes, "Law Firm Theme"), " by Conversion Insights";
-            break;
-        case 17:
-            echo "Theme created by ", mlfGetLinkWithText($me, "Tyler Young"), " of Conversion Insights";
-            break;
-        case 18:
-            echo "Theme by ", mlfGetLinkWithText($root, "Conversion Insights");
-            break;
-        case 19:
-            echo mlfGetLinkWithText($themes, "Law Firm Theme"), " by Conversion Insights";
-            break;
-        default:
-            echo "Theme by ", mlfGetLinkWithText($root, "Conversion Insights");
-            break;
-    }
+    $project = $themes;
+
+    $choices = array(
+        /* Project-specific */
+        getLinkWithText($themes, "Free Wordpress Themes for Law Firms"),
+        getLinkWithText($project, "Site created by Conversion Insights"),
+        getLinkWithText($project, "Designed by Conversion Insights"),
+
+        /* Law-firm specific */
+        getLinkWithText($root, "Web Marketing for Law Firms") . " by Conversion Insights",
+        getLinkWithText($root, "Law Firm Marketing Consultant"),
+        getLinkWithText($root, "Web Marketing for Law Firms"),
+        "Law firm marketing by ", getLinkWithText($root, "Conversion Insights"),
+        getLinkWithText($themes, "Law Firm Theme") . " by Conversion Insights",
+        getLinkWithText($themes, "Free WordPress themes for lawyers") . " by " . getLinkWithText($root, "Conversion Insights"),
+        getLinkWithText($themes, "Free WordPress themes for law firms") . " by " . getLinkWithText($root, "Conversion Insights"),
 
 
+        /* Kansas City-specific *
+        getLinkWithText($designServices, "Kansas City Web Design"), */
+
+        /* Generic */
+        "WordPress theme created by " . getLinkWithText($me, "Tyler Young") . " of Conversion Insights",
+        "WordPress theme by " . getLinkWithText($root, "Conversion Insights"),
+        getLinkWithText($root, "Conversion Insights"),
+        getLinkWithText($root, "Web Marketing") . " by Conversion Insights",
+        "Web site created by " . getLinkWithText($me, "Tyler Young") . " of Conversion Insights",
+        "By " .getLinkWithText($root, "Conversion Insights"),
+        "Site created by " . getLinkWithText($root, "Conversion Insights"),
+        "Designed by " . getLinkWithText($root, "Conversion Insights"),
+        getLinkWithText($designServices, "Web Design") . " by Conversion Insights",
+        getLinkWithText($designServices, "Web Design by Conversion Insights"),
+        "Web design by " . getLinkWithText($me, "Tyler Young") . " of Conversion Insights",
+    );
+
+    return $choices[ $id % count($choices) ];
+}
+
+function ciPrintThemeCredit() {
+    echo ciGetThemeCredit();
 }

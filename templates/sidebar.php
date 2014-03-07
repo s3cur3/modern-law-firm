@@ -1,1 +1,10 @@
-<?php dynamic_sidebar('sidebar-primary'); ?>
+<?php
+
+global $ciSidebars;
+reset($ciSidebars);
+$default = key($ciSidebars);
+
+$sidebar = mlfGetNormalizedMeta('sidebar', $default);
+dynamic_sidebar($sidebar);
+
+?>

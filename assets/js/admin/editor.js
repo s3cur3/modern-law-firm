@@ -22,6 +22,7 @@
             addBtn('coloredband', 'Insert a color band', 'coloredband');
             addBtn('cta', 'Insert a call-to-action button', 'cta');
             addBtn('attorney', 'Insert attorney profiles', 'attorney');
+            addBtn('practicearea', 'Insert practice areas', 'practicearea');
             addBtn('carousel', 'Insert an image slider', 'photo');
 
             editor.addCommand('columns', function () {
@@ -250,44 +251,6 @@
 
                 var modal = jQuery("#" + pluginObj.id);
                 if( !modal.length ) {
-                    /*modal = insertModal(pluginObj,
-                        '<ul class="nav nav-tabs">\
-                            <li class="active"><a href="#all-attorneys" data-toggle="tab">Insert all attorneys</a></li>\
-                            <li><a href="#single-attorney" data-toggle="tab">Insert single attorney</a></li>\
-                        </ul>\
-                        <!-- Tab panes -->\
-                        <div class="tab-content">\
-                            <div class="tab-pane active" id="all-attorneys">\
-                                <div class="control-group">\
-                                    <label for="numColumns">Number of columns:</label>\
-                                    <input type="number" id="numColumns" min="1" max="6" step="1" placeholder="4" />\
-                                </div>\
-                                <div class="control-group">\
-                                    <label for="maxLength">Maximum length of bio excerpt (in characters):</label>\
-                                    <input type="number" id="maxLength" min="-1" step="1" placeholder="250" />\
-                                    <p>(Use -1 to get the entire bio, or 250 characters to get the first few sentences.)</p>\
-                                </div>\
-                                <button id="insert-all" type="button" class="btn btn-primary">Insert all attorneys</button>\
-                            </div>\
-                            <div class="tab-pane" id="single-attorney">\
-                                <div class="show-grid">\
-                                    <div class="two-thirds">2/3</div>\
-                                    <div class="one-third">1/3</div>\
-                                </div>\
-                                <button id="23-13" type="button" class="btn btn-primary">Insert 2/3 | 1/3 split</button>\
-                                <div class="show-grid">\
-                                    <div class="one-third">1/3</div>\
-                                    <div class="two-thirds">2/3</div>\
-                                </div>\
-                                <button id="13-23" type="button" class="btn btn-primary">Insert 1/3 | 2/3 split</button>\
-                                <div class="show-grid">\
-                                    <div class="one-third">1/3</div>\
-                                    <div class="one-third">1/3</div>\
-                                    <div class="one-third">1/3</div>\
-                                </div>\
-                                <button id="13-13-13" type="button" class="btn btn-primary">Insert 1/3 | 1/3 | 1/3 split</button>\
-                            </div>\
-                        </div>');*/
                     modal = insertModal(pluginObj,
                         '<div class="control-group mt20">\
                             <label for="numColumns">Number of columns:</label>\
@@ -296,7 +259,7 @@
                         <div class="control-group">\
                             <label for="maxLength">Maximum length of bio excerpt (in characters):</label>\
                             <input type="number" id="maxLength" min="-1" step="1" placeholder="250" />\
-                            <p>(Use -1 to get the entire bio, or 250 characters to get the first few sentences.)</p>\
+                            <p>(Use -1 to get the entire bio, or 250 characters to get the first couple sentences.)</p>\
                         </div>\
                         <button id="insert-all" type="button" class="btn btn-primary">Insert all attorneys</button>');
                 }
@@ -308,6 +271,62 @@
                     var cols = ( modal.find('#numColumns').val() != "" ? modal.find('#numColumns').val() : 1 );
                     var length = ( modal.find('#maxLength').val() != "" ? modal.find('#maxLength').val() : -1 );
                     var shortcode = '[attorneys columns=' + cols + ' length=' + length + ' /]';
+                    tinyMCE.activeEditor.execCommand('mceInsertContent', 0, pre + shortcode + post);
+                    modal.modal('hide');
+                });
+            });
+
+            editor.addCommand('practicearea', function() {
+                var pluginObj = {
+                    'id': "practicearea_insert",
+                    'title': "Insert Practice Area(s)"
+                };
+
+                var modal = jQuery("#" + pluginObj.id);
+                if( !modal.length ) {
+                    modal = insertModal(pluginObj,
+                        '<div class="control-group mt20">\
+                            <label for="numPracticeAreas">Max number of practice areas to display:</label>\
+                            <input type="number" id="numPracticeAreas" min="1" max="100" step="1" placeholder="4" />\
+                        </div>\
+                        <div class="control-group mt20">\
+                            <label for="numColumns">Number of columns:</label>\
+                            <input type="number" id="numColumns" min="1" max="6" step="1" placeholder="4" />\
+                        </div>\
+                        <div class="control-group mt20">\
+                            <label for="listOnly">Display as list only (no excerpt)?</label>\
+                            <input type="checkbox" id="listOnly" />\
+                        </div>\
+                        <div class="control-group">\
+                            <label for="maxLength">Maximum length of practice area excerpt (in characters):</label>\
+                            <input type="number" id="maxLength" min="-1" step="1" placeholder="250" />\
+                            <p>(Use -1 to get the entire practice area, or 250 characters to get the first couple sentences.)</p>\
+                        </div>\
+                        <div class="control-group mt20">\
+                            <label for="showMore">Show "more" link after excerpt?</label>\
+                            <input type="checkbox" id="showMore" />\
+                        </div>\
+                        <button id="insert-all" type="button" class="btn btn-primary">Insert practice areas</button>');
+                }
+                modal.modal('show');
+
+                var pre = '<div class="practicearea-insert"><p>';
+                var post = '</p></div><p>&nbsp;</p>';
+                modal.find("#insert-all").click(function() {
+                    var pa = ( modal.find('#numPracticeAreas').val() != "" ? modal.find('#numPracticeAreas').val() : 100 );
+                    var listOnly = modal.find('#listOnly').prop('checked');
+                    var more = modal.find('#showMore').prop('checked');
+                    var cols = ( modal.find('#numColumns').val() != "" ? modal.find('#numColumns').val() : 1 );
+                    var length = ( modal.find('#maxLength').val() != "" ? modal.find('#maxLength').val() : -1 );
+
+                    var shortcode = '[practiceareas max=' + pa + ' columns=' + cols + ' length=' + length;
+                    if( listOnly ) {
+                        shortcode += ' list';
+                    }
+                    if( more ) {
+                        shortcode += ' more';
+                    }
+                    shortcode += ' /]';
                     tinyMCE.activeEditor.execCommand('mceInsertContent', 0, pre + shortcode + post);
                     modal.modal('hide');
                 });

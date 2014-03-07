@@ -13,15 +13,17 @@ foreach( $attorneys as $i => $attorney ) {
     if( $i % 2 == 0 ) { ?>
         <div class="row"><?php
     }?>
-    <div id="post-<?php echo $attorney['id']; ?>" class="main individual-post mb35 col-md-6"><?php
+    <div id="post-<?php echo $attorney['id']; ?>" class="main individual-post mb35 col-md-6" itemscope itemtype="http://schema.org/Person"><?php
         if( $attorney['imgURL'] != '' ) { ?>
-            <div class="">
+            <div class="text-center">
                 <a href="<?php echo $attorney['url']; ?>" title="<?php echo $attorney['title']; ?>">
-                    <img class="mb0" src="<?php echo $attorney['imgURL']; ?>" alt="<?php echo $attorney['title']; ?>" width="<?php echo $attorney['imgWidth']; ?>" height="<?php echo $attorney['imgHeight']; ?>"/>
-                </a>
+                    <img class="mb0" src="<?php echo $attorney['imgURL']; ?>" alt="<?php echo $attorney['title']; ?>" width="<?php echo $attorney['imgWidth']; ?>" height="<?php echo $attorney['imgHeight']; ?>" itemprop="image">
+                </a><?php
+                if(count($attorney['socialURLs']) > 1)
+                    printSocialLinks( $attorney['socialURLs'], 'in-attorney-list' ); ?>
             </div><?php
         } ?>
-        <h2><a href="<?php echo $attorney['url']; ?>" title="<?php echo $attorney['title']; ?>"><?php echo $attorney['title']; ?></a></h2> <?php
+        <h2><a href="<?php echo $attorney['url']; ?>" title="<?php echo $attorney['title']; ?>" itemprop="name"><?php echo $attorney['title']; ?></a></h2> <?php
         echo $attorney['content'];
 
         if( strlen(strip_tags($attorney['fullContent'], '<p>')) > strlen($attorney['content'])) {?>
