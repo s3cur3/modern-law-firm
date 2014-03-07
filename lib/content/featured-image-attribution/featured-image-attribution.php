@@ -19,7 +19,7 @@ function fia_add_attribution_box() {
         add_meta_box(
             'attribution_box',
             'Featured Image Attribution',
-            'fia_show_attribution_box',
+            'show_attribution_box',
             $screen, 'side', 'low'
         );
     }

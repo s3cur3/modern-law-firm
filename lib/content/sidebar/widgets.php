@@ -83,19 +83,13 @@ class MLFPracticeAreasWidget extends WP_Widget {
 
         $title = apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base );
 
-        /*foreach( $this->fields as $name => $label ) {
-            if( !isset($instance[$name]) ) {
-                $instance[$name] = '';
-            }
-        }*/
-
         echo $before_widget;
 
         if( $title ) {
             echo $before_title, $title, $after_title;
         }
         if( isset($instance['list']) ) {
-            echo ciGetSponsorList($instance['maxPracticeAreas']);
+            echo mlfGetPracticeAreasTitlesList($instance['maxPracticeAreas']);
         } else {
             echo mlfGetPracticeAreasHTML($instance['maxPracticeAreas'], 0, $instance['maxCharLength']);
         }

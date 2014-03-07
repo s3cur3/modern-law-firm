@@ -133,12 +133,12 @@ function mlfGetPracticeAreasHTML( $numPracticeAreas = 100,
         $out .= "<ul class=\"no-bullet\">\n";
         for( $i = 0; $i < count($practiceAreas); $i++ ) {
             $out .= "<li class=\"{$liClass}\">\n";
-            $out .= getSponsorInnerHTML($practiceAreas[$i], $headingLevel, "none", $useImages, $more);
+            $out .= getPracticeAreaInnerHTML($practiceAreas[$i], $headingLevel, "none", $useImages, $more);
             $out .= "</li>\n";
         }
         $out .= "</ul>\n";
     } else {
-        $out = getSponsorInnerHTML($practiceAreas[0], $headingLevel, "right", $useImages, $more);
+        $out = getPracticeAreaInnerHTML($practiceAreas[0], $headingLevel, "right", $useImages, $more);
     }
     $out .= "</div>";
     return $out;
