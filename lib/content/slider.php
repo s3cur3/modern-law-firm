@@ -6,6 +6,7 @@ function mlfCreatePostType() {
         'labels' => array(
             'name' => 'Slides',
             'singular_name' => 'Slide',
+            'all_items' => 'All Slides',
             'add_new' => 'New Slide',
             'add_new_item' => 'Add New Slide',
             'new_item' => 'New Slide',

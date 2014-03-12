@@ -13,7 +13,7 @@
         if ($thumbnail != NULL) { ?>
             <div class="<?php echo $imgClass ?>">
                 <a href="<?php echo $href; ?>" title="<?php the_title_attribute(); ?>">
-                    <img class="mb0" src="<?php echo $thumbnail; ?>" alt="<?php the_title(); ?>" width="<?php echo $post_thumb[1]; ?>" height="<?php echo $post_thumb[2]; ?>"/>
+                    <img class="mb0 featured-img" src="<?php echo $thumbnail; ?>" alt="<?php the_title(); ?>" width="<?php echo $post_thumb[1]; ?>" height="<?php echo $post_thumb[2]; ?>"/>
                 </a>
                 <?php fia_featured_img_attribution(); ?>
             </div><?php

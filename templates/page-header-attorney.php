@@ -6,7 +6,7 @@ if( $showTitle ) { ?>
             echo roots_title();
 
             if (has_post_thumbnail()) {
-                the_post_thumbnail(MLF_ATTORNEY_IMG_SM, array( 'class'	=> "attachment-post-thumbnail alignright ml20", 'itemprop' => 'name'));
+                the_post_thumbnail(MLF_ATTORNEY_IMG_SM, array( 'class'	=> "attachment-post-thumbnail alignright ml20 featured-img", 'itemprop' => 'name'));
             }
             ?>
         </h1>

@@ -25,7 +25,7 @@ function ciGetThemeCredit() {
         getLinkWithText($root, "Web Marketing for Law Firms") . " by Conversion Insights",
         getLinkWithText($root, "Law Firm Marketing Consultant"),
         getLinkWithText($root, "Web Marketing for Law Firms"),
-        "Law firm marketing by ", getLinkWithText($root, "Conversion Insights"),
+        "Law firm marketing by " . getLinkWithText($root, "Conversion Insights"),
         getLinkWithText($themes, "Law Firm Theme") . " by Conversion Insights",
         getLinkWithText($themes, "Free WordPress themes for lawyers") . " by " . getLinkWithText($root, "Conversion Insights"),
         getLinkWithText($themes, "Free WordPress themes for law firms") . " by " . getLinkWithText($root, "Conversion Insights"),

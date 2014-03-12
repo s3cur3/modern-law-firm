@@ -35,11 +35,11 @@ while ($wp_query->have_posts()) {
         if( $count % 2 == 0 ) {
             $imgClass = "alignleft mr20";
         } ?>
-        <h2><a href="<?php echo $href; ?>" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2><?php
+        <h2><a class="featured-img" href="<?php echo $href; ?>" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2><?php
         if ($thumbnail != NULL) { ?>
             <div class="<?php echo $imgClass ?>">
                 <a href="<?php echo $href; ?>" title="<?php the_title_attribute(); ?>">
-                    <img class="mb0" src="<?php echo $thumbnail; ?>" alt="<?php the_title(); ?>" width="<?php echo $post_thumb[1]; ?>" height="<?php echo $post_thumb[2]; ?>"/>
+                    <img class="mb0 featured-img" src="<?php echo $thumbnail; ?>" alt="<?php the_title(); ?>" width="<?php echo $post_thumb[1]; ?>" height="<?php echo $post_thumb[2]; ?>"/>
                 </a>
                 <?php fia_featured_img_attribution(); ?>
             </div><?php

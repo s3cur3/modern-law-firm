@@ -20,9 +20,7 @@ function optionsframework_option_name() {
  * Defines an array of options that will be used to generate the settings page and be saved in the database.
  * When creating the 'id' fields, make sure to use all lowercase and no spaces.
  *
- * If you are making your theme translatable, you should replace 'options_framework_theme'
- * with the actual text domain for your theme.  Read more:
- * http://codex.wordpress.org/Function_Reference/load_theme_textdomain
+ * To see an example, check out: https://github.com/devinsays/options-framework-theme/blob/master/options.php
  */
 
 function optionsframework_options() {
@@ -35,44 +33,44 @@ function optionsframework_options() {
                            Basics
      ***************************************************************/
     $options[] = array(
-        'name' => __('Basics', 'options_framework_theme'),
+        'name' => __('Basics', MLF_TEXT_DOMAIN),
         'type' => 'heading');
     $options[] = array(
-        'name' => __('', 'options_framework_theme'),
-        'desc' => __('<h3>Blog options</h3>', 'options_framework_theme'),
+        'name' => __('', MLF_TEXT_DOMAIN),
+        'desc' => __('<h3>Blog options</h3>', MLF_TEXT_DOMAIN),
         'type' => 'info');
     $options[] = array(
-        'name' => __('Number of blog posts to show per page', 'options_framework_theme'),
-        'desc' => __('', 'options_framework_theme'),
+        'name' => __('Number of blog posts to show per page', MLF_TEXT_DOMAIN),
+        'desc' => __('', MLF_TEXT_DOMAIN),
         'id' => 'blog_posts_per_page',
         'std' => '5',
         'class' => 'mini',
         'type' => 'text');
     $options[] = array(
-        'name' => __('', 'options_framework_theme'),
-        'desc' => __('<h3>Footer options</h3>', 'options_framework_theme'),
+        'name' => __('', MLF_TEXT_DOMAIN),
+        'desc' => __('<h3>Footer options</h3>', MLF_TEXT_DOMAIN),
         'type' => 'info');
     $options[] = array(
-        'name' => __('Number of columns in the footer', 'options_framework_theme'),
-        'desc' => __('Each widget in the footer "sidebar" will be treated as its own column.', 'options_framework_theme'),
+        'name' => __('Number of columns in the footer', MLF_TEXT_DOMAIN),
+        'desc' => __('Each widget in the footer "sidebar" will be treated as its own column.', MLF_TEXT_DOMAIN),
         'id' => 'footer_columns',
         'std' => '4',
         'class' => 'mini',
         'type' => 'text');
     $options[] = array(
-        'name' => __('', 'options_framework_theme'),
-        'desc' => __('<h3>Google Analytics options</h3>', 'options_framework_theme'),
+        'name' => __('', MLF_TEXT_DOMAIN),
+        'desc' => __('<h3>Google Analytics options</h3>', MLF_TEXT_DOMAIN),
         'type' => 'info');
     $options[] = array(
-        'name' => __('Google Analytics ID', 'options_framework_theme'),
-        'desc' => __('Format: <code>UA-XXXXX-Y</code> (Note: Universal Analytics only, not Classic Analytics)', 'options_framework_theme'),
+        'name' => __('Google Analytics ID', MLF_TEXT_DOMAIN),
+        'desc' => __('Format: <code>UA-XXXXX-Y</code> (Note: Universal Analytics only, not Classic Analytics)', MLF_TEXT_DOMAIN),
         'id' => 'analytics_id',
         'std' => '',
         'class' => 'mini',
         'type' => 'text');
     $options[] = array(
-        'name' => __('', 'options_framework_theme'),
-        'desc' => __('Note that Analytics tracking will <em>not</em> be active when you are logged in. (Open a different Web browser to test it.)', 'options_framework_theme'),
+        'name' => __('', MLF_TEXT_DOMAIN),
+        'desc' => __('Note that Analytics tracking will <em>not</em> be active when you are logged in. (Open a different Web browser to test it.)', MLF_TEXT_DOMAIN),
         'type' => 'info');
 
 
@@ -82,25 +80,53 @@ function optionsframework_options() {
                 Appearance (advanced)
      ***************************************************************/
     $options[] = array(
-        'name' => __('Appearance (advanced)', 'options_framework_theme'),
+        'name' => __('Appearance (advanced)', MLF_TEXT_DOMAIN),
         'type' => 'heading');
 
     $options[] = array(
-        'name' => __('', 'options_framework_theme'),
+        'name' => __('', MLF_TEXT_DOMAIN),
         'desc' => __('<strong>NOTE</strong>: Basic appearance settings, including the colors used by the theme,' .
                      ' can be set using the Wordpress "<a href="./customize.php">Customize</a>" tool.<br />' .
-                     '<a class="btn btn-primary mt10" href="./customize.php" style="text-decoration:none">Take me to the basic appearance options</a>', 'options_framework_theme'),
+                     '<a class="btn btn-primary mt10" href="./customize.php" style="text-decoration:none">Take me to the basic appearance options</a>', MLF_TEXT_DOMAIN),
         'type' => 'info');
 
     $options[] = array(
-        'name' => __('Firm Logo', 'options_framework_theme'),
-        'desc' => __('By default, we use the <a href="./options-general.php">site title</a> as the "logo." To use an image instead, set it here.<br /> Recommended size: 300x37.', 'options_framework_theme'),
+        'name' => __('Fix navigation bar to the top of the screen?', 'options_check'),
+        'desc' => __('If checked, the navigation will follow the user down the page.', 'options_check'),
+        'id' => 'navbar_fixed',
+        'std' => '0',
+        'type' => 'checkbox');
+
+    $options[] = array(
+        'name' => __('Firm Logo', MLF_TEXT_DOMAIN),
+        'desc' => __('By default, we use the <a href="./options-general.php">site title</a> as the "logo." To use an image instead, set it here.<br /> Recommended size: 300x37.', MLF_TEXT_DOMAIN),
         'id' => 'firm_logo',
         'type' => 'upload');
 
+
     $options[] = array(
-        'name' => __('Full-screen background image', 'options_framework_theme'),
-        'desc' => __('To use a large image as the background to the pages (instead of a flat, solid color), upload an image here.<br /> Recommended size: 1600x1024 or larger.', 'options_framework_theme'),
+        'name' => __('SVG version of logo', MLF_TEXT_DOMAIN),
+        'desc' => __('If you choose to use an SVG version of the logo, the bitmap (above) will be used as a fallback.', MLF_TEXT_DOMAIN),
+        'id' => 'svg_logo',
+        'type' => 'upload');
+    $options[] = array(
+        'name' => __('Width to display SVG', MLF_TEXT_DOMAIN),
+        'desc' => __('(in pixels)&mdash;should be the same as the bitmap version\'s width', MLF_TEXT_DOMAIN),
+        'id' => 'svg_logo_width',
+        'std' => '',
+        'class' => 'mini',
+        'type' => 'text');
+    $options[] = array(
+        'name' => __('Height to display SVG', MLF_TEXT_DOMAIN),
+        'desc' => __('(in pixels)&mdash;should be the same as the bitmap version\'s height', MLF_TEXT_DOMAIN),
+        'id' => 'svg_logo_height',
+        'std' => '',
+        'class' => 'mini',
+        'type' => 'text');
+
+    $options[] = array(
+        'name' => __('Full-screen background image', MLF_TEXT_DOMAIN),
+        'desc' => __('To use a large image as the background to the pages (instead of a flat, solid color), upload an image here.<br /> Recommended size: 1600x1024 or larger.', MLF_TEXT_DOMAIN),
         'id' => 'full_screen_image_bg',
         'type' => 'upload');
 
@@ -125,13 +151,13 @@ function optionsframework_options() {
             'greyzz' => $patternPath . 'greyzz.png.png')
     );
     $options[] = array(
-        'name' => __('Favicon for site', 'options_framework_theme'),
-        'desc' => __('A <a href="http://en.wikipedia.org/wiki/Favicon" target="_blank">favicon</a> is the little icon displayed in the page\'s tab. You can create one from a 16&times;16 image using the <a href="http://www.favicon.cc/" target="_blank">Favicon Generator</a>.', 'options_framework_theme'),
+        'name' => __('Favicon for site', MLF_TEXT_DOMAIN),
+        'desc' => __('A <a href="http://en.wikipedia.org/wiki/Favicon" target="_blank">favicon</a> is the little icon displayed in the page\'s tab. You can create one from a 16&times;16 image using the <a href="http://www.favicon.cc/" target="_blank">Favicon Generator</a>.', MLF_TEXT_DOMAIN),
         'id' => 'favicon',
         'type' => 'upload');
     $options[] = array(
-        'name' => __('Apple Touch Icon', 'options_framework_theme'),
-        'desc' => __('When someone adds your site to their home screen on an Apple device (iPhone, iPad, etc.), the <a href="https://developer.apple.com/library/ios/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html" target="_blank">Apple Touch Icon</a> is the image that will be used. (Typically, a 152&times;152 PNG is recommended.)', 'options_framework_theme'),
+        'name' => __('Apple Touch Icon', MLF_TEXT_DOMAIN),
+        'desc' => __('When someone adds your site to their home screen on an Apple device (iPhone, iPad, etc.), the <a href="https://developer.apple.com/library/ios/documentation/AppleApplications/Reference/SafariWebContent/ConfiguringWebApplications/ConfiguringWebApplications.html" target="_blank">Apple Touch Icon</a> is the image that will be used. (Typically, a 152&times;152 PNG is recommended.)', MLF_TEXT_DOMAIN),
         'id' => 'touch_icon',
         'type' => 'upload');
     $options[] = array(
@@ -148,52 +174,52 @@ function optionsframework_options() {
                 Social media
      ***************************************************************/
     $options[] = array(
-        'name' => __('Social Media Links', 'options_framework_theme'),
+        'name' => __('Social Media Links', MLF_TEXT_DOMAIN),
         'type' => 'heading');
 
     $options[] = array(
-        'name' => __('Facebook URL', 'options_framework_theme'),
-        'desc' => __('URL for your firm\'s Facebook page. <br>(To hide the Facebook icon, leave this blank.)', 'options_framework_theme'),
+        'name' => __('Facebook URL', MLF_TEXT_DOMAIN),
+        'desc' => __('URL for your firm\'s Facebook page. <br>(To hide the Facebook icon, leave this blank.)', MLF_TEXT_DOMAIN),
         'id' => 'fb',
         'std' => 'http://facebook.com/',
         'type' => 'text');
 
     $options[] = array(
-        'name' => __('Twitter URL', 'options_framework_theme'),
-        'desc' => __('URL for your firm\'s Twitter page. <br />(To hide the Twitter icon, leave this blank.)', 'options_framework_theme'),
+        'name' => __('Twitter URL', MLF_TEXT_DOMAIN),
+        'desc' => __('URL for your firm\'s Twitter page. <br />(To hide the Twitter icon, leave this blank.)', MLF_TEXT_DOMAIN),
         'id' => 'twitter',
         'std' => 'https://twitter.com/',
         'type' => 'text');
 
     $options[] = array(
-        'name' => __('LinkedIn URL', 'options_framework_theme'),
-        'desc' => __('URL for your firm\'s LinkedIn page. <br />(To hide the LinkedIn icon, leave this blank.)', 'options_framework_theme'),
+        'name' => __('LinkedIn URL', MLF_TEXT_DOMAIN),
+        'desc' => __('URL for your firm\'s LinkedIn page. <br />(To hide the LinkedIn icon, leave this blank.)', MLF_TEXT_DOMAIN),
         'id' => 'linkedin',
         'std' => 'http://www.linkedin.com/in/',
         'type' => 'text');
 
     $options[] = array(
-        'name' => __('Google+ URL', 'options_framework_theme'),
-        'desc' => __('URL for your firm\'s Google+ page. <br />(To hide the Google+ icon, leave this blank.)', 'options_framework_theme'),
+        'name' => __('Google+ URL', MLF_TEXT_DOMAIN),
+        'desc' => __('URL for your firm\'s Google+ page. <br />(To hide the Google+ icon, leave this blank.)', MLF_TEXT_DOMAIN),
         'id' => 'gplus',
         'std' => 'https://plus.google.com/',
         'type' => 'text');
 
     $options[] = array(
-        'name' => __('Google+ link is to: ', 'options_framework_theme'),
-        'desc' => __('If you like, you can associate all pages of your site with an individual author or your organization. (<a href="http://www.searchenginejournal.com/claiming-google-authorship-and-publisher-markup-for-seo/61263/" target="_blank">More info</a>)', 'options_framework_theme'),
+        'name' => __('Google+ link is to: ', MLF_TEXT_DOMAIN),
+        'desc' => __('If you like, you can associate all pages of your site with an individual author or your organization. (<a href="http://www.searchenginejournal.com/claiming-google-authorship-and-publisher-markup-for-seo/61263/" target="_blank">More info</a>)', MLF_TEXT_DOMAIN),
         'id' => 'gplus_authorship',
         'std' => 'organization',
         'type' => 'select',
         'options' => $test_array = array(
-                'author' => __('The site\'s primary "author"', 'options_framework_theme'),
-                'organization' => __('Your organization', 'options_framework_theme'),
-                'none' => __('None', 'options_framework_theme')
+                'author' => __('The site\'s primary "author"', MLF_TEXT_DOMAIN),
+                'organization' => __('Your organization', MLF_TEXT_DOMAIN),
+                'none' => __('None', MLF_TEXT_DOMAIN)
             ));
 
     $options[] = array(
-        'name' => __('Display social media icons in full color?', 'options_framework_theme'),
-        'desc' => __('', 'options_framework_theme'),
+        'name' => __('Display social media icons in full color?', MLF_TEXT_DOMAIN),
+        'desc' => __('', MLF_TEXT_DOMAIN),
         'id' => 'social_icons_color',
         'std' => false,
         'type' => 'select',
@@ -209,7 +235,7 @@ function optionsframework_options() {
                 Disclaimer
      ***************************************************************/
 	$options[] = array(
-		'name' => __('Disclaimer', 'options_framework_theme'),
+		'name' => __('Disclaimer', MLF_TEXT_DOMAIN),
 		'type' => 'heading' );
 
 	/**
@@ -226,7 +252,7 @@ function optionsframework_options() {
 	);
 
 	$options[] = array(
-		'name' => __('Disclaimer (for the bottom of each page)', 'options_framework_theme'),
+		'name' => __('Disclaimer (for the bottom of each page)', MLF_TEXT_DOMAIN),
 		'desc' => "If you'd like a disclaimer at the very, very bottom of each page, you can type it here.",
 		'id' => 'disclaimer',
 		'type' => 'editor',
@@ -236,11 +262,11 @@ function optionsframework_options() {
                 Documentation
      ***************************************************************/
     $options[] = array(
-        'name' => __('Documentation', 'options_framework_theme'),
+        'name' => __('Documentation', MLF_TEXT_DOMAIN),
         'type' => 'heading' );
 
     $options[] = array(
-        'name' => __('', 'options_framework_theme'),
+        'name' => __('', MLF_TEXT_DOMAIN),
         'desc' => '<iframe src="' . get_template_directory_uri() . '/docs/modern-law-firm-documentation.html" style="width:100%;height:1080px;"></iframe>',
         'type' => 'info');
 

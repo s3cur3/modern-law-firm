@@ -8,6 +8,11 @@ if( $showSlider ) {
 
 get_template_part('templates/head');
 
+
+
+if( of_get_option('navbar_fixed', false) ) {
+    $additionalClass .= "has-fixed-navbar";
+}
 ?>
 <body <?php body_class($additionalClass); ?>>
 

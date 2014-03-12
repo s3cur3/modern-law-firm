@@ -28,7 +28,6 @@ function roots_widgets_init() {
     register_widget( 'Roots_Vcard_Widget' );
     register_widget( 'MLFPracticeAreasWidget' );
 }
-
 add_action( 'widgets_init', 'roots_widgets_init' );
 
 
@@ -40,104 +39,106 @@ add_action( 'widgets_init', 'roots_widgets_init' );
 /**
  * Practice Areas Widget
  */
-class MLFPracticeAreasWidget extends WP_Widget {
-    private $fields = array(
-        'title'            => 'Title (optional):',
-        'list'             => 'Display as list of links only?',
-        'maxPracticeAreas' => 'Max number of practice areas to display:',
-        'maxCharLength'    => 'Max length of practice area descriptions:'
-    );
-    private $className = 'MLFPracticeAreasWidget';
+if( !class_exists('MLFPracticeAreasWidget') ) {
+    class MLFPracticeAreasWidget extends WP_Widget {
+        private $fields = array(
+            'title'            => 'Title (optional):',
+            'list'             => 'Display as list of links only?',
+            'maxPracticeAreas' => 'Max number of practice areas to display:',
+            'maxCharLength'    => 'Max length of practice area descriptions:'
+        );
+        private $className = 'MLFPracticeAreasWidget';
 
-    
-    function __construct() {
-        $widget_ops = array( 'classname' => $this->className, 'description' => __( 'Displays a list of your practice areas', MLF_TEXT_DOMAIN ) );
 
-        $this->WP_Widget( $this->className, __( 'Practice Areas', MLF_TEXT_DOMAIN ), $widget_ops );
-        $this->alt_option_name = $this->className;
+        function __construct() {
+            $widget_ops = array( 'classname' => $this->className, 'description' => __( 'Displays a list of your practice areas', MLF_TEXT_DOMAIN ) );
 
-        add_action( 'save_post', array( &$this, 'flush_widget_cache' ) );
-        add_action( 'deleted_post', array( &$this, 'flush_widget_cache' ) );
-        add_action( 'switch_theme', array( &$this, 'flush_widget_cache' ) );
-    }
+            $this->WP_Widget( $this->className, __( 'Practice Areas', MLF_TEXT_DOMAIN ), $widget_ops );
+            $this->alt_option_name = $this->className;
 
-    function widget( $args, $instance ) {
-        $cache = wp_cache_get( $this->className, 'widget' );
-
-        if( !is_array( $cache ) ) {
-            $cache = array();
+            add_action( 'save_post', array( &$this, 'flush_widget_cache' ) );
+            add_action( 'deleted_post', array( &$this, 'flush_widget_cache' ) );
+            add_action( 'switch_theme', array( &$this, 'flush_widget_cache' ) );
         }
 
-        if( !isset($args['widget_id']) ) {
-            $args['widget_id'] = null;
-        }
+        function widget( $args, $instance ) {
+            $cache = wp_cache_get( $this->className, 'widget' );
 
-        if( isset($cache[$args['widget_id']]) ) {
-            echo $cache[$args['widget_id']];
+            if( !is_array( $cache ) ) {
+                $cache = array();
+            }
 
-            return;
-        }
+            if( !isset($args['widget_id']) ) {
+                $args['widget_id'] = null;
+            }
 
-        ob_start();
-        extract( $args, EXTR_SKIP );
+            if( isset($cache[$args['widget_id']]) ) {
+                echo $cache[$args['widget_id']];
 
-        $title = apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base );
+                return;
+            }
 
-        echo $before_widget;
+            ob_start();
+            extract( $args, EXTR_SKIP );
 
-        if( $title ) {
-            echo $before_title, $title, $after_title;
-        }
-        if( isset($instance['list']) ) {
-            echo mlfGetPracticeAreasTitlesList($instance['maxPracticeAreas']);
-        } else {
-            echo mlfGetPracticeAreasHTML($instance['maxPracticeAreas'], 0, $instance['maxCharLength']);
-        }
-        echo $after_widget;
+            $title = apply_filters( 'widget_title', $instance['title'], $instance, $this->id_base );
 
-        $cache[$args['widget_id']] = ob_get_flush();
-        wp_cache_set( $this->className, $cache, 'widget' );
-    }
+            echo $before_widget;
 
-    function update( $new_instance, $old_instance ) {
-        $instance = array_map( 'strip_tags', $new_instance );
-
-        $this->flush_widget_cache();
-
-        $alloptions = wp_cache_get( 'alloptions', 'options' );
-
-        if( isset($alloptions[$this->className]) ) {
-            delete_option( $this->className );
-        }
-
-        return $instance;
-    }
-
-    function flush_widget_cache() {
-        wp_cache_delete( $this->className, 'widget' );
-    }
-
-    function form( $instance ) {
-        foreach( $this->fields as $name => $label ) {
-            ${$name} = isset($instance[$name]) ? esc_attr( $instance[$name] ) : '';
-
-            $typeSpecificStuff = 'value="' . ${$name} . '" ';
-            if( $name == 'list' ) {
-                $typeSpecificStuff .= 'type="checkbox"';
-                if( isset($instance[$name]) ) {
-                    $typeSpecificStuff .= 'checked';
-                }
-            } elseif( $name == 'maxPracticeAreas' || $name == 'maxCharLength' ) {
-                $typeSpecificStuff .= 'type="number" min="1" max="1000" step="1"';
+            if( $title ) {
+                echo $before_title, $title, $after_title;
+            }
+            if( isset($instance['list']) ) {
+                echo mlfGetPracticeAreasTitlesList($instance['maxPracticeAreas']);
             } else {
-                $typeSpecificStuff .= "type=\"text\"";
-            } ?>
-            <p>
-                <label for="<?php echo esc_attr( $this->get_field_id( $name ) ); ?>"><?php _e( "{$label}", MLF_TEXT_DOMAIN ); ?></label>
-                <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( $name ) ); ?>"
-                       name="<?php echo esc_attr( $this->get_field_name( $name ) ); ?>"
-                       value="<?php echo ${$name}; ?>" <?php echo $typeSpecificStuff; ?>>
-            </p> <?php
+                echo mlfGetPracticeAreasHTML($instance['maxPracticeAreas'], 0, $instance['maxCharLength']);
+            }
+            echo $after_widget;
+
+            $cache[$args['widget_id']] = ob_get_flush();
+            wp_cache_set( $this->className, $cache, 'widget' );
+        }
+
+        function update( $new_instance, $old_instance ) {
+            $instance = array_map( 'strip_tags', $new_instance );
+
+            $this->flush_widget_cache();
+
+            $alloptions = wp_cache_get( 'alloptions', 'options' );
+
+            if( isset($alloptions[$this->className]) ) {
+                delete_option( $this->className );
+            }
+
+            return $instance;
+        }
+
+        function flush_widget_cache() {
+            wp_cache_delete( $this->className, 'widget' );
+        }
+
+        function form( $instance ) {
+            foreach( $this->fields as $name => $label ) {
+                ${$name} = isset($instance[$name]) ? esc_attr( $instance[$name] ) : '';
+
+                $typeSpecificStuff = 'value="' . ${$name} . '" ';
+                if( $name == 'list' ) {
+                    $typeSpecificStuff .= 'type="checkbox"';
+                    if( isset($instance[$name]) ) {
+                        $typeSpecificStuff .= 'checked';
+                    }
+                } elseif( $name == 'maxPracticeAreas' || $name == 'maxCharLength' ) {
+                    $typeSpecificStuff .= 'type="number" min="1" max="1000" step="1"';
+                } else {
+                    $typeSpecificStuff .= "type=\"text\"";
+                } ?>
+                <p>
+                    <label for="<?php echo esc_attr( $this->get_field_id( $name ) ); ?>"><?php _e( "{$label}", MLF_TEXT_DOMAIN ); ?></label>
+                    <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( $name ) ); ?>"
+                           name="<?php echo esc_attr( $this->get_field_name( $name ) ); ?>"
+                           value="<?php echo ${$name}; ?>" <?php echo $typeSpecificStuff; ?>>
+                </p> <?php
+            }
         }
     }
 }
@@ -154,110 +155,112 @@ class MLFPracticeAreasWidget extends WP_Widget {
 /**
  * Example vCard widget
  */
-class Roots_Vcard_Widget extends WP_Widget {
-    private $fields = array(
-        'title'          => 'Title (optional)',
-        'street_address' => 'Street Address',
-        'locality'       => 'City/Locality',
-        'region'         => 'State/Region',
-        'postal_code'    => 'Zipcode/Postal Code',
-        'tel'            => 'Telephone',
-        'email'          => 'Email'
-    );
+if( !class_exists('Roots_Vcard_Widget') ) {
+    class Roots_Vcard_Widget extends WP_Widget {
+        private $fields = array(
+            'title'          => 'Title (optional)',
+            'street_address' => 'Street Address',
+            'locality'       => 'City/Locality',
+            'region'         => 'State/Region',
+            'postal_code'    => 'Zipcode/Postal Code',
+            'tel'            => 'Telephone',
+            'email'          => 'Email'
+        );
 
-    function __construct() {
-        $widget_ops = array( 'classname' => 'widget_roots_vcard', 'description' => __( 'Use this widget to add a vCard', MLF_TEXT_DOMAIN ) );
+        function __construct() {
+            $widget_ops = array( 'classname' => 'widget_roots_vcard', 'description' => __( 'Use this widget to add a vCard', MLF_TEXT_DOMAIN ) );
 
-        $this->WP_Widget( 'widget_roots_vcard', __( 'Roots: vCard', MLF_TEXT_DOMAIN ), $widget_ops );
-        $this->alt_option_name = 'widget_roots_vcard';
+            $this->WP_Widget( 'widget_roots_vcard', __( 'Roots: vCard', MLF_TEXT_DOMAIN ), $widget_ops );
+            $this->alt_option_name = 'widget_roots_vcard';
 
-        add_action( 'save_post', array( &$this, 'flush_widget_cache' ) );
-        add_action( 'deleted_post', array( &$this, 'flush_widget_cache' ) );
-        add_action( 'switch_theme', array( &$this, 'flush_widget_cache' ) );
-    }
-
-    function widget( $args, $instance ) {
-        $cache = wp_cache_get( 'widget_roots_vcard', 'widget' );
-
-        if( !is_array( $cache ) ) {
-            $cache = array();
+            add_action( 'save_post', array( &$this, 'flush_widget_cache' ) );
+            add_action( 'deleted_post', array( &$this, 'flush_widget_cache' ) );
+            add_action( 'switch_theme', array( &$this, 'flush_widget_cache' ) );
         }
 
-        if( !isset($args['widget_id']) ) {
-            $args['widget_id'] = null;
-        }
+        function widget( $args, $instance ) {
+            $cache = wp_cache_get( 'widget_roots_vcard', 'widget' );
 
-        if( isset($cache[$args['widget_id']]) ) {
-            echo $cache[$args['widget_id']];
-
-            return;
-        }
-
-        ob_start();
-        extract( $args, EXTR_SKIP );
-
-        $title = apply_filters( 'widget_title', empty($instance['title']) ? __( 'vCard', MLF_TEXT_DOMAIN ) : $instance['title'], $instance, $this->id_base );
-
-        foreach( $this->fields as $name => $label ) {
-            if( !isset($instance[$name]) ) {
-                $instance[$name] = '';
+            if( !is_array( $cache ) ) {
+                $cache = array();
             }
-        }
 
-        echo $before_widget;
+            if( !isset($args['widget_id']) ) {
+                $args['widget_id'] = null;
+            }
 
-        if( $title ) {
-            echo $before_title, $title, $after_title;
-        } ?>
-        <p class="vcard" itemscope itemtype="http://schema.org/Attorney">
-            <a class="fn org url" href="<?php echo home_url( '/' ); ?>"><span itemprop="name"><?php echo apply_filters( 'widget_text', get_bloginfo( 'name' ) ); ?></span></a><br>
-              <span class="adr" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
-                <span class="street-address" itemprop="streetAddress"><?php echo apply_filters( 'widget_text', $instance['street_address'] ); ?></span><br>
-                <span class="locality" itemprop="addressLocality"><?php echo apply_filters( 'widget_text', $instance['locality'] ); ?></span>,
-                <span class="region" itemprop="addressRegion"><?php echo apply_filters( 'widget_text', $instance['region'] ); ?></span>
-                <span class="postal-code"><?php echo apply_filters( 'widget_text', $instance['postal_code'] ); ?></span><br>
-              </span>
-            <?php $phone = apply_filters( 'widget_text', $instance['tel'] ) ?>
-            <span class="tel" itemprop="telephone"><a class="value" href="tel:<?php echo ciFilterNumbersOnly($phone); ?>"><?php echo $phone; ?></a></span><br>
-            <a class="email" href="mailto:<?php echo $instance['email']; ?>"><?php echo apply_filters( 'widget_text', $instance['email'] ); ?></a>
-        </p>
-        <?php
-        echo $after_widget;
+            if( isset($cache[$args['widget_id']]) ) {
+                echo $cache[$args['widget_id']];
 
-        $cache[$args['widget_id']] = ob_get_flush();
-        wp_cache_set( 'widget_roots_vcard', $cache, 'widget' );
-    }
+                return;
+            }
 
-    function update( $new_instance, $old_instance ) {
-        $instance = array_map( 'strip_tags', $new_instance );
+            ob_start();
+            extract( $args, EXTR_SKIP );
 
-        $this->flush_widget_cache();
+            $title = apply_filters( 'widget_title', empty($instance['title']) ? __( 'vCard', MLF_TEXT_DOMAIN ) : $instance['title'], $instance, $this->id_base );
 
-        $alloptions = wp_cache_get( 'alloptions', 'options' );
+            foreach( $this->fields as $name => $label ) {
+                if( !isset($instance[$name]) ) {
+                    $instance[$name] = '';
+                }
+            }
 
-        if( isset($alloptions['widget_roots_vcard']) ) {
-            delete_option( 'widget_roots_vcard' );
-        }
+            echo $before_widget;
 
-        return $instance;
-    }
-
-    function flush_widget_cache() {
-        wp_cache_delete( 'widget_roots_vcard', 'widget' );
-    }
-
-    function form( $instance ) {
-        foreach( $this->fields as $name => $label ) {
-            ${$name} = isset($instance[$name]) ? esc_attr( $instance[$name] ) : '';
-            ?>
-            <p>
-                <label
-                    for="<?php echo esc_attr( $this->get_field_id( $name ) ); ?>"><?php _e( "{$label}:", MLF_TEXT_DOMAIN ); ?></label>
-                <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( $name ) ); ?>"
-                       name="<?php echo esc_attr( $this->get_field_name( $name ) ); ?>" type="text"
-                       value="<?php echo ${$name}; ?>">
+            if( $title ) {
+                echo $before_title, $title, $after_title;
+            } ?>
+            <p class="vcard" itemscope itemtype="http://schema.org/Attorney">
+                <a class="fn org url" href="<?php echo home_url( '/' ); ?>"><span itemprop="name"><?php echo apply_filters( 'widget_text', get_bloginfo( 'name' ) ); ?></span></a><br>
+                  <span class="adr" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+                    <span class="street-address" itemprop="streetAddress"><?php echo apply_filters( 'widget_text', $instance['street_address'] ); ?></span><br>
+                    <span class="locality" itemprop="addressLocality"><?php echo apply_filters( 'widget_text', $instance['locality'] ); ?></span>,
+                    <span class="region" itemprop="addressRegion"><?php echo apply_filters( 'widget_text', $instance['region'] ); ?></span>
+                    <span class="postal-code"><?php echo apply_filters( 'widget_text', $instance['postal_code'] ); ?></span><br>
+                  </span>
+                <?php $phone = apply_filters( 'widget_text', $instance['tel'] ) ?>
+                <span class="tel" itemprop="telephone"><a class="value" href="tel:<?php echo ciFilterNumbersOnly($phone); ?>"><?php echo $phone; ?></a></span><br>
+                <a class="email" href="mailto:<?php echo $instance['email']; ?>"><?php echo apply_filters( 'widget_text', $instance['email'] ); ?></a>
             </p>
-        <?php
+            <?php
+            echo $after_widget;
+
+            $cache[$args['widget_id']] = ob_get_flush();
+            wp_cache_set( 'widget_roots_vcard', $cache, 'widget' );
+        }
+
+        function update( $new_instance, $old_instance ) {
+            $instance = array_map( 'strip_tags', $new_instance );
+
+            $this->flush_widget_cache();
+
+            $alloptions = wp_cache_get( 'alloptions', 'options' );
+
+            if( isset($alloptions['widget_roots_vcard']) ) {
+                delete_option( 'widget_roots_vcard' );
+            }
+
+            return $instance;
+        }
+
+        function flush_widget_cache() {
+            wp_cache_delete( 'widget_roots_vcard', 'widget' );
+        }
+
+        function form( $instance ) {
+            foreach( $this->fields as $name => $label ) {
+                ${$name} = isset($instance[$name]) ? esc_attr( $instance[$name] ) : '';
+                ?>
+                <p>
+                    <label
+                        for="<?php echo esc_attr( $this->get_field_id( $name ) ); ?>"><?php _e( "{$label}:", MLF_TEXT_DOMAIN ); ?></label>
+                    <input class="widefat" id="<?php echo esc_attr( $this->get_field_id( $name ) ); ?>"
+                           name="<?php echo esc_attr( $this->get_field_name( $name ) ); ?>" type="text"
+                           value="<?php echo ${$name}; ?>">
+                </p>
+            <?php
+            }
         }
     }
 }

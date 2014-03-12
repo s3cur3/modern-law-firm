@@ -138,7 +138,7 @@ function mlfGetPracticeAreasHTML( $numPracticeAreas = 100,
         }
         $out .= "</ul>\n";
     } else {
-        $out = getPracticeAreaInnerHTML($practiceAreas[0], $headingLevel, "right", $useImages, $more);
+        $out .= getPracticeAreaInnerHTML($practiceAreas[0], $headingLevel, "right", $useImages, $more);
     }
     $out .= "</div>";
     return $out;

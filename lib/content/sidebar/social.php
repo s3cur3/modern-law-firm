@@ -74,20 +74,25 @@ function getAttorneySocialURLs($postID=null) {
         'linkedin' => mlfGetNormalizedMeta('linkedin', '', $postID),
     );
 
+    return $arr;
+}
+
+
+/**
+ * @param array $urlArray The array spit out by getAttorneySocialURLs()
+ * @return boolean True if there are no "real" social URLs; false otherwise
+ */
+function socialURLsAreEmpty( $urlArray ) {
     $arrayNonEmpty = false;
-    foreach( $arr as $key => $val ) {
+    foreach( $urlArray as $key => $val ) {
         if( strlen($val) > 0 ) {
             $arrayNonEmpty = true;
             break;
         }
     }
-
-    if($arrayNonEmpty) {
-        return $arr;
-    } else {
-        return array();
-    }
+    return !$arrayNonEmpty;
 }
+
 
 /**
  * Prints the <link rel="publisher"> or <link rel="author"> tags, as appropriate

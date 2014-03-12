@@ -10,7 +10,7 @@
             if ($thumbnail != NULL) {
                 ?>
                 <div class="featured-img">
-                <a href="<?php echo $href; ?>" title="<?php the_title_attribute(); ?>">
+                <a class="featured-img" href="<?php echo $href; ?>" title="<?php the_title_attribute(); ?>">
                     <img class="mb10" src="<?php echo $thumbnail; ?>" alt="<?php the_title(); ?>"
                          width="<?php echo $post_thumb[1]; ?>" height="<?php echo $post_thumb[2]; ?>"/>
                 </a>

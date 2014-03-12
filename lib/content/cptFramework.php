@@ -22,6 +22,7 @@ function ciCreateCPT($singular, $plural='', $registeredID='', $dashicon='admin-p
             'singular_name' => $singular,
             'add_new' => "New $singular",
             'add_new_item' => "Add New $singular",
+            'all_items' => "All $plural",
             'new_item' => "New $singular",
             'edit_item' => "Edit $singular",
             'view_item' => "View $singular"
