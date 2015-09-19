@@ -21,3 +21,14 @@ echo "\n\n\nZipping build directory"
 zip -r ${ZIP} ${DIRECTORY}
 echo "\n\n\nNuking build directory"
 rm -r ${DIRECTORY}
+
+
+find modern-law-firm -name '.*' -type f -delete
+# Now do the free version
+ZIP="modern-law-firm.zip"
+echo "\n\n\nNuking existing ZIP"
+rm ${ZIP}
+DIRECTORY="modern-law-firm"
+echo "\n\n\nZipping build directory"
+zip -r ${ZIP} ${DIRECTORY}
+
