@@ -16,8 +16,8 @@ function mlfRegisterMetaBoxes( $meta_boxes ) {
      * Use underscore (_) at the beginning to make keys hidden
      * Alt.: You also can make prefix empty to disable it
      */
-    // Better has an underscore as last sign
-    $prefix = THEME_PREFIX . '_';
+    // Better have an underscore as the last character!
+    $prefix = MLF_THEME_PREFIX . '_';
 
     // 1st meta box
     $meta_boxes[] = array(

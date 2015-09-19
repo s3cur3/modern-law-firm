@@ -6,6 +6,13 @@
         <div class="entry-content"><?php
             $post_thumb = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), MLF_FULL_WIDTH_WITH_SIDEBAR_IMG);
             $thumbnail = $post_thumb[0];
+            $href = "";
+            if(get_post_meta($post->ID, 'external_link_value', true) != NULL) {
+                $href = get_post_meta($post->ID, 'external_link_value', true);
+            } else {
+                $href = get_permalink();
+            }
+
 
             if ($thumbnail != NULL) {
                 ?>

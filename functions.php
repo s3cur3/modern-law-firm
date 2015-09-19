@@ -1,4 +1,7 @@
 <?php
+// Temporarily disable the deprecated constructor warning for the sake of the testimonials plugin
+add_filter('deprecated_constructor_trigger_error', '__return_false');
+
 /*
  * Loads the Options Panel
  *
