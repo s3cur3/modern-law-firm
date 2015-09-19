@@ -18,7 +18,7 @@ function getSocialLink( $url, $brandStr ) {
  *                                   entries for 'facebook', 'twitter', 'google-plus', and 'linkedin'
  * @param string $additionalListClass An additional class to apply to the ul tag
  */
-function printSocialLinks( $profilesOverride=array(), $additionalListClass ) {
+function printSocialLinks( $profilesOverride=array(), $additionalListClass="" ) {
     echo getSocialLinks($profilesOverride, $additionalListClass);
 }
 
@@ -32,7 +32,7 @@ function printSocialLinks( $profilesOverride=array(), $additionalListClass ) {
  * @param string $additionalListClass An additional class to apply to the ul tag
  * @return string An unordered list of social icons
  */
-function getSocialLinks( $profilesOverride=array(), $additionalListClass ) {
+function getSocialLinks( $profilesOverride=array(), $additionalListClass="" ) {
     $profiles = array(
         "facebook" => of_get_option( 'fb' ),
         "twitter" => of_get_option('twitter'),

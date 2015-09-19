@@ -42,11 +42,6 @@ function mlfRegisterRequiredPlugins() {
             'required' 	=> true,
         ),
         array(
-            'name'     => 'Royal PrettyPhoto',
-            'slug'     => 'rt-prettyphoto',
-            'required' => true,
-        ),
-        array(
             'name' 		=> 'Contact Form 7',
             'slug' 		=> 'contact-form-7',
             'required' 	=> false,

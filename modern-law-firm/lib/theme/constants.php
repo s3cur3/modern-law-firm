@@ -1,6 +1,7 @@
 <?php
 
 define('THEME_PREFIX', 'mlf');
+if( !defined('MLF_THEME_PREFIX') ) define('MLF_THEME_PREFIX', 'mlf');
 define('MLF_SLUG', 'modern-law-firm');
 define('MLF_TEXT_DOMAIN', MLF_SLUG);
 
