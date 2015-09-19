@@ -212,7 +212,7 @@ function roots_theme_activation_action()
             $landing_nav_id = wp_create_nav_menu('Landing Page Navigation', array('slug' => 'landing_navigation'));
             $roots_nav_theme_mod['landing_navigation'] = $landing_nav_id;
         } else {
-            $roots_nav_theme_mod['primary_navigation'] = $landing_nav->term_id;
+            $roots_nav_theme_mod['landing_navigation'] = $landing_nav->term_id;
         }
 
         if ($roots_nav_theme_mod) {

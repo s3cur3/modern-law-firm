@@ -1,3 +1,10 @@
+<?php
+/* =================================================
+ * NOTE: THIS TEMPLATE IS UNUSED!!!!
+ * It is here as a fallback only.
+ * =================================================*/
+?>
+<!-- templates/header.php -->
 <header class="banner container" role="banner">
   <div class="row">
     <div class="col-lg-12">

@@ -40,7 +40,7 @@ function ciFilterToMaxCharLength($content, $maxCharLength = -1) {
     $content = strip_shortcodes($content); // optional, recommended
     $content = strip_tags($content, '<p>'); // use ' $text = strip_tags($text,'<p><a>'); ' if you want to keep some tags
 
-    $content = substr($content,0,$maxCharLength);
+    $content = substr($content,0,intval($maxCharLength));
     $excerpt = ciReverseStrrchr($content, '.', 1);
     if( $excerpt ) {
         return apply_filters('the_excerpt',$excerpt);
@@ -107,4 +107,18 @@ function ciNormalizeShortcodeAtts( $atts ) {
     }
 
     return $atts;
+}
+
+/**
+ * Returns only the domain portion of a URL
+ * @param string $url The full URL (like "http://www.google.com")
+ * @return string The domain (like "google.com")
+ */
+function ciFilterUrlToDomainOnly($url) {
+    $domain = str_ireplace('www.', '', parse_url($url, PHP_URL_HOST));
+    return $domain;
+}
+
+function ciGetSiteDomain() {
+    return ciFilterUrlToDomainOnly( home_url('/') );
 }

@@ -10,7 +10,9 @@ Documentation: The Modern Law Firm Theme
 - **Theme creator**: Tyler Young of [Conversion Insights][CI]
 - **Email**: <tyler@conversioninsights.net>
 
-Thanks for using my theme. If you need support, customization, or help with your firm's Web marketing, feel free to [email me](mailto:tyler@conversioninsights.net) and I'll do my best to help.
+Thanks for using my theme. If you have any questions that are beyond the scope of this help file, feel free to email me at <tyler@conversioninsights.net>.
+
+If you need support, customization, or help with your firm's Web marketing, [email me](mailto:tyler@conversioninsights.net) and I'll do my best to help.
 
 For help & advice on your online marketing campaigns, you can sign up for my [free course on getting more clients from your Web site](http://conversioninsights.net/get-clients-for-law-firm/?utm_source=themeDocumentation&utm_medium=web&utm_campaign=moreClients).
 
@@ -23,6 +25,7 @@ For help & advice on your online marketing campaigns, you can sign up for my [fr
 - [Creating the Home Page (A Tour of the Theme)](#creatingthehomepageatourofthetheme)
     + [Image sliders](#imagesliders)
     + [Attorney profiles](#attorneyprofiles)
+- [Notes on the Full-Width Layout](#notesonthefull-widthlayout)
 - [Configuring the Menus and Navigation](#configuringthemenusandnavigation)
 - [Setting Up the Sidebar](#settingupthesidebar)
 - [Setting Up the Footer](#settingupthefooter)
@@ -132,7 +135,7 @@ To do 1), go to the Slides page of the WordPress Admin interface. There, you can
 
 Note that the recommended size for slide images depends on whether you're using the slides at the very top of the page or within it. (Slides at the very top of the page can be stretched much wider than the typical page.)
 
-- For slides used at the top of the page, the recommended size is 1920&times;400px.
+- For slides used at the top of the page, the recommended size is 1920&times;657px.
 - For slides used within a page, the recommended dimensions are 1170&times;400px.
 
 (In reality, the height of the images can be whatever you want, so long as it is consistent.)
@@ -161,6 +164,31 @@ Attorney profiles in the theme are very similar to image sliders (see [the previ
 When inserting these attorney profiles, you'll be able to choose how many columns to display them in (one attorney per column), and how much of their profile to display---that is, the maximum number of characters to show from their profile.
 
 There is one more place you can display the attorney profiles, though. You can use the "All Attorneys" template on a particular page. This is useful if you would like a page listing all attorneys, with links to the individual attorney's bios. Thus, in the demo site, we have created an "Attorneys" page that uses this template to list all the firm's attorneys.
+
+
+
+
+Notes on the Full-Width Layout
+------------------------------------------------------
+
+This theme supports both a standard Web page layout and a full-width layout.
+
+![A full-width layout (left) alongside the page layout (right) for the same content.](img/full-width-vs-paged.jpg)
+
+When using the standard page layout (a.k.a. the "boxed" layout), you have the opportunity to use a background pattern or image. (For an example of what that looks like, [see the demo site](http://cisandbox.wpengine.com/home-page-3/?layout=normal&bg=image).)
+
+With the full-width view, however, some content (like image sliders and colored bands) will stretch to the very edges of the screen. Text content, however, will *not* stretch to the edges of the screen. (To do so would be undesirable---when text columns become too wide, they become very difficult to read.)
+
+For the most part, the two layouts are interchangeable---you could switch between them without issue. In fact, when using a sidebar on a particular page, the full-width layout will look just like the "boxed" layout (it will just have a white background instead of a pattern/image/etc.)
+
+With that said, you may experience some weirdness when using full-width text content on pages without a sidebar. (Lists, blockquotes, and the like may be slightly off in their formatting.)
+
+To correct this, simply put your full-width text content into a custom, single-column layout, by doing the following:
+
+1. Open the WordPress editor for the full-width (no-sidebar) page in question.
+2. Click the "Make columns" button <img src="img/btns/threecolumns.png" /> in the bank of editor buttons.
+3. Tell it to create a 1 column layout (type the number 1 and press enter).
+4. Replace the content that appears with your own.
 
 
 Configuring the Menus and Navigation
@@ -306,9 +334,11 @@ For more advanced visual customization, go to the Appearance > Theme Options pag
 
 If you'd like to get your hands dirty, you can edit the theme's HTML and CSS.
 
-**Note**: Simply editing the theme's HTML (PHP) and CSS is not a great idea, because any changes you make may be overwritten when you upgrade the theme to a newer version.
+**IMPORTANT NOTE**: Simply editing the theme's HTML (PHP) and CSS is not a great idea, because any changes you make may be overwritten when you upgrade the theme to a newer version.
 
 Instead, you should [create a Child Theme](http://codex.wordpress.org/Child_Themes) and modify *that* theme. This is the *only* way to ensure your modifications will remain when the theme is upgraded.
+
+We've included a sample, very basic child theme in the `docs` directory for you to start with. See the `modern-law-child-theme` directory you find there for a very detailed guide to using your child theme.
 
 When making modifications, here's what you need to know:
 

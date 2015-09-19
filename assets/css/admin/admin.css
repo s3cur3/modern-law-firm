@@ -4,6 +4,24 @@
     visibility: visible !important;
 }
 
+/** Fix conflict between WP Engine common plugins and Bootstrap modals **/
+html body.wp-admin div.modal.fade {
+    display: none;
+    overflow: auto;
+    overflow-y: scroll;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1050;
+    -webkit-overflow-scrolling: touch;
+    outline: 0;
+    width: 100%;
+    margin: 0 auto;
+    background: transparent;
+}
+
 
 .modal .modal-content {
     margin-top: 75px;

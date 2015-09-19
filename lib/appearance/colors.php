@@ -1,34 +1,163 @@
 <?php
 
+function ciGetColorTheme() {
+    $theme = of_get_option('color_theme', 'blue_charcoal');
+    if( isset($_GET['color']) ) {
+        $theme = $_GET['color'];
+    }
+
+
+    $link = '#428bca';
+    $name = '#27201D';
+    $bg = '#eeeeee';
+    $secondaryBG = '#27201D';
+    $h2 = "#27201D";
+    $h1 = "#27201D";
+    $btn = '#428bca';
+    $h2OnSecondary = "#ffffff";
+    $navigationBar = "#f8f8f8";
+    switch( $theme ) {
+        case "red_charcoal":
+            $link = '#A60304';
+            $btn = $link;
+            $h2OnSecondary = "#ffffff";
+            break;
+        case "green_charcoal":
+            $link = '#20C033';
+            $btn = $link;
+            $h2OnSecondary = "#ffffff";
+            break;
+        case "orange_charcoal":
+            $link = '#F66200';
+            $btn = $link;
+            $h2OnSecondary = "#ffffff";
+            break;
+        case "blue_green":
+            $link = '#3FAFE9';
+            $btn = '#50A038';
+            $bg = '#ffffff';
+            $h2 = $link;
+            $h2OnSecondary = $h2;
+            break;
+        case "brown":
+            $link = "#6871A5";//'#4E6094';
+            $btn = '#C48851';
+            $name = '#6B3010';
+            $secondaryBG = '#3B3129';
+            $bg = "#ffffff";
+            $h2 = $btn;
+            $h1 = $secondaryBG;
+            $h2OnSecondary = $h2;
+            break;
+        case "royalblue":
+            $link = '#418EBF';
+            $name = '#17558C';
+            $bg = '#e9f0f5';
+            $secondaryBG = '#133663';
+            $h2 = $link;
+            $h1 = $secondaryBG;
+            $btn = $link;
+            $h2OnSecondary = $h2;
+            break;
+        case "purple":
+            $link = '#B068C2';
+            $name = '#390A74';
+            $bg = '#EDE6ED';
+            $secondaryBG = $name;
+            $h2 = $link;
+            $h1 = $name;
+            $btn = $link;
+            $h2OnSecondary = $h2;
+            break;
+        case "darkgreen":
+            $link = '#0A8C00';
+            $name = $link;
+            $bg = '#CADBC5';
+            $secondaryBG = "#002800";
+            $h2 = $link;
+            $h1 = $name;
+            $btn = $link;
+            $h2OnSecondary = $h2;
+            break;
+        case "multi":
+            $link = '#45B29D';
+            $name = '#E27A3F';
+            $bg = '#ffffff';
+            $secondaryBG = '#334D5C';
+            $h2 = "#E27A3F";
+            $h1 = "#45B29D";
+            $btn = '#45B29D';
+            $h2OnSecondary = $h2;
+            break;
+
+    }
+    return array(
+        'splash_color' => $link,
+        'firm_name_color' => $name,
+        'background_color' => $bg,
+        'secondary_background_color' => $secondaryBG,
+        'heading_color' => $h2,
+        'page_title_color' => $h1,
+        'button_color' => $btn,
+        'heading_on_secondary_background' => $h2OnSecondary,
+        'navigation_bar' => $navigationBar
+    );
+}
+
+
 // Register colorpickers
 add_action('customize_register', 'mlfCustomizeRegister');
 function mlfCustomizeRegister($wp_customize)
 {
+    $defaultColors = ciGetColorTheme();
     $colors = array();
     $colors[] =
         array(
             'slug' => 'splash_color',
-            'default' => '#428bca',
-            'label' => __('Splash Color', 'Modern_Law_Firm')
+            'default' => $defaultColors['splash_color'],
+            'label' => __('Link Color', MLF_TEXT_DOMAIN)
+        );
+    $colors[] =
+        array(
+            'slug' => 'button_color',
+            'default' => $defaultColors['button_color'],
+            'label' => __('Button Color', MLF_TEXT_DOMAIN)
         );
     $colors[] =
         array(
             'slug' => 'firm_name_color',
-            'default' => '#222222',
-            'label' => __('Firm Name Color', 'Modern_Law_Firm')
+            'default' => $defaultColors['firm_name_color'],
+            'label' => __('Firm Name Color', MLF_TEXT_DOMAIN)
         );
-
+    $colors[] =
+        array(
+            'slug' => 'page_title_color',
+            'default' => $defaultColors['page_title_color'],
+            'label' => __('Page Title Color', MLF_TEXT_DOMAIN)
+        );
+    $colors[] =
+        array(
+            'slug' => 'heading_color',
+            'default' => $defaultColors['heading_color'],
+            'label' => __('Level 2 Heading Color', MLF_TEXT_DOMAIN)
+        );
     $colors[] =
         array(
             'slug' => 'background_color',
-            'default' => '#eeeeee',
-            'label' => __('Background Color', 'Modern_Law_Firm')
+            'default' => $defaultColors['background_color'],
+            'label' => __('Background Color', MLF_TEXT_DOMAIN)
         );
     $colors[] =
         array(
             'slug' => 'secondary_background_color',
-            'default' => '#222222',
-            'label' => __('Secondary Background Color', 'Modern_Law_Firm')
+            'default' => $defaultColors['secondary_background_color'],
+            'label' => __('Secondary Background Color', MLF_TEXT_DOMAIN)
+        );
+    $colors[] =
+        array(
+            'slug' => 'navigation_bar',
+            'default' => $defaultColors['navigation_bar'],
+            'label' => __('Navigation Bar Color', MLF_TEXT_DOMAIN)
         );
 
     foreach ($colors as $color) {
@@ -76,26 +205,43 @@ function mlfAdjustBrightness($hex, $steps) {
 
 
 
+add_action( 'ci_styles', 'mlfPrintCustomColorStyling' );
 function mlfPrintCustomColorStyling() {
-    $splash = get_option('splash_color');
-    $firm_name = get_option('firm_name_color');
-    $background = get_option('background_color');
-    $secondaryBG = get_option('secondary_background_color');
+    /**
+     * Gets the customized color for a particular use.
+     * @param string $colorIdentifier The name of the color, as registered with the WordPress theme customizer
+     * @return string The color, in the form "#xxxxxxx"
+     */
+    function mlfGetNormalizedColor($colorIdentifier) {
+        $defaultColors = ciGetColorTheme();
+        $clr = get_option($colorIdentifier);
+        if( ($clr == "" || $clr == "#") && array_key_exists($colorIdentifier, $defaultColors) ) {
+            $clr = $defaultColors[$colorIdentifier];
+        }
+
+        // Hack to keep this from being in the Customize options
+        if( $colorIdentifier == 'heading_on_secondary_background' && !$clr ) {
+            $clr = $defaultColors[$colorIdentifier];
+        }
+
+        if( $clr[0] !== "#" ) {
+            $clr = "#" . $clr;
+        }
+
+        return $clr;
+    }
+
+    $splash = mlfGetNormalizedColor('splash_color');
+    $firm_name = mlfGetNormalizedColor('firm_name_color');
+    $background = mlfGetNormalizedColor('background_color');
+    $secondaryBG = mlfGetNormalizedColor('secondary_background_color');
+    $h1 = mlfGetNormalizedColor('page_title_color');
+    $h2 = mlfGetNormalizedColor('heading_color');
+    $h2OnSecondary = mlfGetNormalizedColor('heading_on_secondary_background');
+    $btn = mlfGetNormalizedColor('button_color');
     $backgroundImg = of_get_option("full_screen_image_bg");
     $backgroundPattern = of_get_option("pattern_bg");
-    //$_color = get_option('_color');
-
-    // Correct weirdness from WP
-    if( $splash == "" ) $splash = "#428bca";
-    if( $firm_name == "" ) $firm_name = "#222222";
-    if( $background == "" ) $background = "#eeeeee";
-    if( $secondaryBG == "" ) $secondaryBG = "#222222";
-
-    if( $splash[0] !== "#" ) $splash = "#" . $splash;
-    if( $firm_name[0] !== "#" ) $firm_name = "#" . $firm_name;
-    if( $background[0] !== "#" ) $background = "#" . $background;
-    if( $secondaryBG[0] !== "#" ) $secondaryBG = "#" . $secondaryBG;
-
+    $navigationBar = mlfGetNormalizedColor('navigation_bar');
 
 ?>
     <!-- From colors.php -->
@@ -109,17 +255,35 @@ function mlfPrintCustomColorStyling() {
                 -moz-background-size: cover;
                 -o-background-size: cover;
                 background-size: cover; <?php
-            } else if( $backgroundPattern ) {
+            } else if( $backgroundPattern && $backgroundPattern != 'none' ) {
                 $patternPath = get_template_directory_uri() . '/assets/img/patterns/'; ?>
-                background-image: url('<?php echo $patternPath, $backgroundPattern; ?>');
+                background-image: url('<?php echo $patternPath, $backgroundPattern; ?>.png');
                 background-repeat: repeat;
                 background-position: center center;<?php
             } ?>
         }
 
+        .navbar-default {
+            background-color: <?php echo $navigationBar; ?>;
+            border-color: <?php echo mlfAdjustBrightness($navigationBar, -10); ?>;
+        }
+
         .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus, .dropdown-menu>.active>a, .dropdown-menu>.active>a:hover, .dropdown-menu>.active>a:focus {
             background: <?php echo $splash; ?>;
             color: #fff;
+        }
+
+        h1 {
+            color: <?php echo $h1 ?>;
+        }
+        h2 {
+            color: <?php echo $h2 ?>;
+        }
+        .carousel-caption h2 {
+            color: #fff;
+        }
+        .inverted h2 {
+            color: <?php echo $h2OnSecondary; ?>;
         }
 
         a, .individual-post .meta a:hover {
@@ -140,12 +304,12 @@ function mlfPrintCustomColorStyling() {
 
         .btn-primary, input[type="submit"], button[type="submit"] {
             color: #fff;
-            background-color: <?php echo $splash ?>;
-            border-color: <?php echo mlfAdjustBrightness($splash, -20) ?>; /* slightly darker */
+            background-color: <?php echo $btn; ?>;
+            border-color: <?php echo mlfAdjustBrightness($btn, -20) ?>; /* slightly darker */
         }
         .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary, input[type="submit"]:hover, button[type="submit"]:hover, input[type="submit"]:focus, button[type="submit"]:focus, form input[type="submit"]:hover, form input[type="submit"]:focus {
-            background-color: <?php echo mlfAdjustBrightness($splash, -18) ?>;
-            border-color: <?php echo mlfAdjustBrightness($splash, -35) ?>;
+            background-color: <?php echo mlfAdjustBrightness($btn, -18) ?>;
+            border-color: <?php echo mlfAdjustBrightness($btn, -35) ?>;
             color: #fff;
         }
 
@@ -161,7 +325,6 @@ function mlfPrintCustomColorStyling() {
     </style>
 <?php
 }
-add_action( 'wp_head', 'mlfPrintCustomColorStyling' );
 
 
 

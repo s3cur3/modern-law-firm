@@ -4,6 +4,7 @@
  * @param $url string The URL for the user's social media page
  * @param $brandStr string The "brand" name used by FontAwesome: "facebook", "twitter", "google-plus", or "linkedin"
  *                          See all icons here: http://fontawesome.io/icons/
+ * @return string The individual social link
  */
 function getSocialLink( $url, $brandStr ) {
     return "<a href=\"$url\" target=\"_blank\" class=\"social\"><i class=\"fa fa-2x fa-{$brandStr}-square\"></i></a>";
@@ -18,7 +19,7 @@ function getSocialLink( $url, $brandStr ) {
  *                                   entries for 'facebook', 'twitter', 'google-plus', and 'linkedin'
  * @param string $additionalListClass An additional class to apply to the ul tag
  */
-function printSocialLinks( $profilesOverride=array(), $additionalListClass="") {
+function printSocialLinks( $profilesOverride=array(), $additionalListClass="" ) {
     echo getSocialLinks($profilesOverride, $additionalListClass);
 }
 
@@ -32,7 +33,7 @@ function printSocialLinks( $profilesOverride=array(), $additionalListClass="") {
  * @param string $additionalListClass An additional class to apply to the ul tag
  * @return string An unordered list of social icons
  */
-function getSocialLinks( $profilesOverride=array(), $additionalListClass="") {
+function getSocialLinks( $profilesOverride=array(), $additionalListClass="" ) {
     $profiles = array(
         "facebook" => of_get_option( 'fb' ),
         "twitter" => of_get_option('twitter'),
@@ -75,6 +76,22 @@ function getAttorneySocialURLs($postID=null) {
     );
 
     return $arr;
+}
+
+/**
+ * @param $arrayOfSocialURLs
+ */
+function attorneySocialURLsAreEmpty($arrayOfSocialURLs) {
+    $empty = true;
+    if( is_array($arrayOfSocialURLs) && count($arrayOfSocialURLs) > 0 ) {
+        foreach( $arrayOfSocialURLs as $key => $val ) {
+            if( $val ) {
+                $empty = false;
+                break;
+            }
+        }
+    }
+    return $empty;
 }
 
 
@@ -161,7 +178,7 @@ class SocialMediaWidget extends WP_Widget
         }
         ?>
         <p>
-            <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:'); ?></label>
+            <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Title:', MLF_TEXT_DOMAIN); ?></label>
             <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>"
                    name="<?php echo $this->get_field_name('title'); ?>" type="text"
                    value="<?php echo esc_attr($title); ?>">

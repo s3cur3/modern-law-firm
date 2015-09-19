@@ -6,6 +6,9 @@
  * replace the dash with an underscore when adding it to the object below.
  * ======================================================================== */
 
+
+
+
 var Roots = {
   // All pages
   common: {
@@ -38,10 +41,10 @@ var UTIL = {
   loadEvents: function() {
     UTIL.fire('common');
 
-    $.each(document.body.className.replace(/-/g, '_').split(/\s+/),function(i,classnm) {
+    jQuery.each(document.body.className.replace(/-/g, '_').split(/\s+/),function(i,classnm) {
       UTIL.fire(classnm);
     });
   }
 };
 
-$(document).ready(UTIL.loadEvents);
+jQuery(document).ready(UTIL.loadEvents);

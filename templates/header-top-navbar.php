@@ -1,3 +1,4 @@
+<!-- templates/header-top-navbar.php -->
 <?php
 $name = get_bloginfo('name');
 $brandHTML = $name;
@@ -33,12 +34,21 @@ if( of_get_option('navbar_fixed', false) ) {
             <a class="navbar-brand" href="<?php echo home_url(); ?>/"><?php echo $brandHTML; ?></a>
         </div>
 
-        <nav class="collapse navbar-collapse" role="navigation">
-            <?php
+        <nav class="collapse navbar-collapse" role="navigation"> <?php
+            $socialInNav = of_get_option('social_in_nav');
+            $socialHTML = "";
+            if( $socialInNav ) {
+                $socialHTML = getSocialLinks();
+            }
+
+            $additionalNavText = of_get_option('additional_menu_text', '');
+            if( $additionalNavText || $socialHTML ) {
+                echo "<div class=\"post-nav\">{$additionalNavText}{$socialHTML}</div>";
+            }
+
             if( has_nav_menu('primary_navigation') ) {
                 wp_nav_menu(array('theme_location' => 'primary_navigation', 'menu_class' => 'nav navbar-nav'));
-            }
-            ?>
+            } ?>
         </nav>
     </div>
 </header>

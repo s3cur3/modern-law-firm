@@ -1,3 +1,4 @@
+<!-- templates/header-top-navbar-landing.php -->
 <?php
 $name = get_bloginfo('name');
 $brandHTML = $name;
@@ -6,6 +7,7 @@ if ($imgURL) {
     $brandHTML = "<img src=\"{$imgURL}\" alt=\"{$name}\" />";
 }
 ?>
+<!-- Landing page navigation -->
 <header class="banner navbar navbar-default navbar-static-top" role="banner">
     <div class="container">
         <div class="navbar-header">
@@ -20,9 +22,9 @@ if ($imgURL) {
 
         <nav class="collapse navbar-collapse" role="navigation">
             <?php
-            if (has_nav_menu('landing_navigation')) :
+            if( has_nav_menu('landing_navigation') ) {
                 wp_nav_menu(array('theme_location' => 'landing_navigation', 'menu_class' => 'nav navbar-nav'));
-            endif;
+            }
             ?>
         </nav>
     </div>

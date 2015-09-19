@@ -1,3 +1,4 @@
+<!-- templates/page-header-attorney.php -->
 <?php
 $showTitle = mlfGetNormalizedMeta('show_page_title', true);
 if( $showTitle ) { ?>

@@ -7,6 +7,7 @@
  * Remove inline CSS used by posts with galleries
  * Remove self-closing tag and change ''s to "'s on rel_canonical()
  */
+/*
 function roots_head_cleanup() {
   // Originally from http://wpengineer.com/1438/wordpress-header/
   remove_action('wp_head', 'feed_links', 2);
@@ -41,17 +42,19 @@ function roots_rel_canonical() {
   echo "\t<link rel=\"canonical\" href=\"$link\">\n";
 }
 add_action('init', 'roots_head_cleanup');
+*/
 
 /**
  * Remove the WordPress version from RSS feeds
  */
-add_filter('the_generator', '__return_false');
+//add_filter('the_generator', '__return_false');
 
 /**
  * Clean up language_attributes() used in <html> tag
  *
  * Remove dir="ltr"
  */
+/*
 function roots_language_attributes() {
   $attributes = array();
   $output = '';
@@ -72,10 +75,12 @@ function roots_language_attributes() {
   return $output;
 }
 add_filter('language_attributes', 'roots_language_attributes');
+*/
 
 /**
  * Manage output of wp_title()
  */
+/*
 function roots_wp_title($title) {
   if (is_feed()) {
     return $title;
@@ -86,10 +91,12 @@ function roots_wp_title($title) {
   return $title;
 }
 add_filter('wp_title', 'roots_wp_title', 10);
+*/
 
 /**
  * Clean up output of stylesheet <link> tags
  */
+/*
 function roots_clean_style_tag($input) {
   preg_match_all("!<link rel='stylesheet'\s?(id='[^']+')?\s+href='(.*)' type='text/css' media='(.*)' />!", $input, $matches);
   // Only display media if it is meaningful
@@ -97,6 +104,7 @@ function roots_clean_style_tag($input) {
   return '<link rel="stylesheet" href="' . $matches[2][0] . '"' . $media . '>' . "\n";
 }
 add_filter('style_loader_tag', 'roots_clean_style_tag');
+*/
 
 /**
  * Add and remove body_class() classes

@@ -1,5 +1,6 @@
+<!-- templates/footer-landing.php -->
 <div class="container content-info col-sm-8" role="contentinfo">
-    <p class="text-center"><a href="<?php echo site_url(); ?>">Continue to <?php echo bloginfo('name'); ?></a></p>
+    <p class="text-center"><a href="<?php echo site_url(); ?>">Continue to <?php echo do_shortcode(get_bloginfo('name')); ?></a></p>
     <?php mlfPrintDisclaimer(); ?>
 </div>
 

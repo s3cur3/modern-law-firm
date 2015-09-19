@@ -1,3 +1,4 @@
+<!-- templates/page-header-archive.php -->
 <?php
 $showTitle = mlfGetNormalizedMeta( 'show_page_title', true );
 if( $showTitle ) { ?>

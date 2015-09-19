@@ -13,19 +13,74 @@ html, body, div {
   font-weight: 300;
 }
 body.has-fixed-navbar {
-  padding-top: 44px;
+  padding-top: 74px;
 }
 body.admin-bar .navbar-fixed-top {
   top: 32px;
 }
 
-main .pad {
-  padding: 0 30px 30px;
-  img {
-    max-width: 100%;
-    height: auto;
+main .pad img {
+  max-width: 100%;
+  height: auto;
+}
+
+.full-width {
+  margin: 1em 0;
+}
+
+.container {
+  .pad {
+    padding: 0 30px 60px;
+  }
+  .pad > .no-pad {
+    margin-left: -45px;
+    margin-right: -45px;
   }
 }
+
+.container-fluid {
+  .pad {
+    padding: 0 0 60px;
+  }
+  .pad > * {
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .pad > *, .pad > .no-pad > *  {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .pad > * {
+    max-width: @container-lg;
+  }
+  .pad > .no-pad > * {
+    max-width: (@container-lg - (2 * @grid-gutter-width));
+  }
+  .pad > .no-pad > .carousel {
+    max-width: 100%;
+  }
+
+  .pad > .no-pad {
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: -(@grid-gutter-width/2);
+    margin-right: -(@grid-gutter-width/2);
+    width: 100%;
+  }
+  .full-width {
+    width: 100%;
+    max-width: 100%;
+  }
+  .pad>.no-pad>.full-width {
+    max-width: 1920px;
+    width: 100%;
+  }
+}
+
+
 
 /* ==========================================================================
    Header
@@ -36,14 +91,22 @@ main .pad {
   font-size: 1.6em;
   font-weight: 700;
   padding-top: 24px;
+  min-height: 72px;
 }
 
 .navbar-nav>li>a {
   padding-top: 25px;
   padding-bottom: 25px;
 }
-.navbar-nav {
+.navbar-nav, .post-nav {
   font-size: 0.9em;
+}
+.post-nav {
+  float: right;
+  padding-top: 25px;
+  .social-list {
+    margin-bottom: 0;
+  }
 }
 
 .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
@@ -105,7 +168,6 @@ form {
 
 .testimonials-widget-testimonial {
   q, blockquote {
-    font-family: Merriweather, Georgia, 'Times New Roman', Times, serif;
     font-size: 1.2em;
     line-height: 1.5em;
     font-style: italic;
@@ -126,9 +188,6 @@ form {
     margin-bottom: 0;
   }
 }
-.full-width {
-  margin: 1em -45px;
-}
 
 .jumbo-band {
   .full-width;
@@ -139,6 +198,9 @@ form {
     margin-top: 0;
   }
 }
+.pad > .jumbo-band {
+  padding: 45px;
+}
 h1 .btn, h2 .btn, h3 .btn, h4 .btn {
   font-family: @font-family-base;
 }
@@ -148,6 +210,8 @@ h1 .btn, h2 .btn, h3 .btn, h4 .btn {
   max-width: 1920px;
   margin: 0 auto;
 }
+
+
 .carousel-inner {
   max-width: 1920px;
 }
@@ -166,6 +230,30 @@ h1 .btn, h2 .btn, h3 .btn, h4 .btn {
   padding-bottom: 6px;
   h2 {
     font-size: 2em;
+  }
+}
+.carousel.inpage {
+  margin-left: -45px;
+  margin-right: -45px;
+}
+.carousel.right {
+}
+@media (min-width: @screen-md-min) {
+  .col-md-8 .carousel.full-width {
+    max-width: 622px;
+  }
+  .carousel.right {
+    margin-right: -45px;
+    margin-left: 0;
+  }
+  .carousel.left {
+    margin-left: -45px;
+    margin-right: 0;
+  }
+}
+@media (min-width: @screen-lg-min) {
+  .col-md-8 .carousel.full-width {
+    max-width: 745px;
   }
 }
 
@@ -192,10 +280,12 @@ h1 .btn, h2 .btn, h3 .btn, h4 .btn {
 }
 
 .no-bullet, ul.no-bullet, .widget ul.no-bullet, ul.no-bullet li {
-  padding-left: 0;
   list-style: none;
   text-indent: 0;
   margin-left: 0;
+}
+.no-bullet, ul.no-bullet, .widget ul.no-bullet {
+  padding-left: 0;
 }
 .widget ul.no-bullet li:before {
   content: '';
@@ -223,11 +313,18 @@ div.practice-areas {
 }
 
 figure.alignright {
-  margin-left: 10px;
+  margin-left: 12px;
 }
 figure.alignleft {
-  margin-right: 10px;
+  margin-right: 12px;
 }
+img.alignright {
+  margin-left: 12px;
+}
+img.alignleft {
+  margin-right: 12px;
+}
+
 
 
 /* ==========================================================================
@@ -249,7 +346,10 @@ h1, .navbar-brand {
   opacity: 0.8;
 }
 
-.main {
+.pseudo-fluid main {
+  background: transparent;
+}
+.container main {
   background: #fff;
 }
 
@@ -453,6 +553,17 @@ figure.alignnone { margin-left: 0; margin-right: 0; }
 }
 
 
+
+/* ==========================================================================
+            Fluid Layout stuff
+   ========================================================================== */
+
+
+
+
+
+
+
 /* ==========================================================================
    Media Queries
    ========================================================================== */
@@ -577,7 +688,16 @@ figure.alignnone { margin-left: 0; margin-right: 0; }
   /* ==========================================================================
    Base
    ========================================================================== */
-
+  .container-fluid {
+    main.col-sm-8 .pad > * {
+      max-width: (690px+@grid-gutter-width);
+      margin-right: 0;
+    }
+    .sidebar.col-sm-4 {
+      max-width: 390px;
+      margin-left: 0;
+    }
+  }
 
   /* ==========================================================================
      Header
@@ -637,6 +757,12 @@ figure.alignnone { margin-left: 0; margin-right: 0; }
     h2 {
       font-size: 1.5em;
     }
+  }
+  .post-nav {
+    position: absolute;
+    right: 25px;
+    z-index: 1;
+    padding-top: 30.5px;
   }
 }
 

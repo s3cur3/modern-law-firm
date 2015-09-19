@@ -28,7 +28,7 @@ function mlfRegisterMetaBoxes( $meta_boxes ) {
         'title' => __( 'The Modern Law Firm theme options', MLF_TEXT_DOMAIN ),
 
         // Post types, accept custom post types as well - DEFAULT is array('post'). Optional.
-        'pages' => array( 'post', 'page' ),
+        'pages' => array( 'post', 'page', 'modern-law-attorney', 'modern-law-practice' ),
 
         // Where the meta box appear: normal (default), advanced, side. Optional.
         'context' => 'normal',
@@ -57,6 +57,13 @@ function mlfRegisterMetaBoxes( $meta_boxes ) {
                 'std'  => 1,
             ),
             array(
+                'name' => __( 'Show featured image?', MLF_TEXT_DOMAIN ),
+                'id'   => "{$prefix}show_featured_img",
+                'type' => 'checkbox',
+                // Value can be 0 or 1
+                'std'  => 1,
+            ),
+            array(
                 'name'     => __( 'Which sidebar should we use?', MLF_TEXT_DOMAIN ),
                 'id'       => "{$prefix}sidebar",
                 'type'     => 'select',
@@ -74,6 +81,13 @@ function mlfRegisterMetaBoxes( $meta_boxes ) {
                 'type' => 'checkbox',
                 // Value can be 0 or 1
                 'std' => 0,
+            ),
+            array(
+                'name' => __( 'Slider delay', MLF_TEXT_DOMAIN ),
+                'desc' => __( 'Wait this many seconds before moving from one slide to the next (for the slider at the top of page)', MLF_TEXT_DOMAIN),
+                'id'   => "{$prefix}top_img_slider_interval",
+                'type' => 'text',
+                'std' => 5,
             ),
             // Taxonomy
             array(
@@ -206,56 +220,6 @@ function mlfRegisterMetaBoxes( $meta_boxes ) {
             ),
         ),
     );
-
-    // Meta box for the slides custom post type
-    $meta_boxes[] = array(
-        // Meta box id, UNIQUE per meta box. Optional since 4.1.5
-        'id' => 'slides-only',
-
-        // Meta box title - Will appear at the drag and drop handle bar. Required.
-        'title' => __( 'Slide options', MLF_TEXT_DOMAIN ),
-
-        // Post types, accept custom post types as well - DEFAULT is array('post'). Optional.
-        'pages' => array( MLF_SLIDE_TYPE ),
-
-        // Where the meta box appear: normal (default), advanced, side. Optional.
-        'context' => 'normal',
-
-        // Order of meta box: high (default), low. Optional.
-        'priority' => 'high',
-
-        // Auto save: true, false (default). Optional.
-        'autosave' => true,
-
-        // List of meta fields
-        'fields' => array(
-            // Caption position
-            array(
-                'name' => __( 'Position of caption:', 'rwmb' ),
-                'id' => "{$prefix}caption_position",
-                'type' => 'select',
-                // Array of 'value' => 'Label' pairs for select box
-                'options' => array(
-                    'center' => __( 'Center', 'rwmb' ),
-                    'left' => __( 'Left', 'rwmb' ),
-                    'right' => __( 'Right', 'rwmb' ),
-                    'none' => __( 'Not displayed', 'rwmb' ),
-                ),
-                // Select multiple values, optional. Default is false.
-                'multiple' => false,
-                'std' => 'center',
-                'desc' => '<strong>Note:</strong> On very small screens, all captions will be centered, with a transparent background.'
-            ),
-            // Caption background color
-            array(
-                'name' => __( 'Caption background color', 'rwmb' ),
-                'id' => "{$prefix}caption_bg",
-                'type' => 'color',
-                'desc' => '<strong>Only</strong> applies to left- or right-positioned captions. Defaults to the secondary background color.'
-            ),
-        ),
-    );
-
 
     return $meta_boxes;
 }

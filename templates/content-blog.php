@@ -1,4 +1,4 @@
-<!-- content-blog -->
+<!-- templates/content-blog.php -->
 <?php while (have_posts()) : the_post(); ?>
     <div class="entry-content">
         <?php the_content(); ?>
@@ -10,7 +10,7 @@ global $paged;
 
 $temp = $wp_query;
 $wp_query = null;
-$wp_query = new WP_Query(array('paged' => $paged, 'showposts' => of_get_option('blog_posts_per_page', 5)));
+$wp_query = new WP_Query(array('paged' => $paged, 'showposts' => get_option('posts_per_page', 5)));
 
 $count = 0;
 while ($wp_query->have_posts()) {

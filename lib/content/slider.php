@@ -60,7 +60,7 @@ add_action( 'add_meta_boxes', 'mlfAddSliderImgSizeNote' );
 function mlfPrintSliderImgSizeNote() {
     echo "<p>Recommended sizes for slider images:</p>";
     echo "<ul>";
-    echo "    <li>For slides used at the top of the page: 1920&times;400</li>";
+    echo "    <li>For slides used at the top of the page: 1920&times;657</li>";
     echo "    <li>For slides inserted within the page: 1170&times;400</li>";
     echo "</ul>";
 }
@@ -73,17 +73,17 @@ function mlfSliderTypeUpdatedMessages( $messages ) {
     $messages[MLF_SLIDE_TYPE] = array(
         0 => '', // Unused. Messages start at index 1.
         1 => sprintf( __('Slide updated. <a href="%s">View slide</a>'), esc_url( get_permalink($post_ID) ) ),
-        2 => __('Custom field updated.'),
-        3 => __('Custom field deleted.'),
-        4 => __('Slide updated.'),
+        2 => __('Custom field updated.', MLF_TEXT_DOMAIN),
+        3 => __('Custom field deleted.', MLF_TEXT_DOMAIN),
+        4 => __('Slide updated.', MLF_TEXT_DOMAIN),
         /* translators: %s: date and time of the revision */
-        5 => isset($_GET['revision']) ? sprintf( __('Slide restored to revision from %s'), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
+        5 => isset($_GET['revision']) ? sprintf( __('Slide restored to revision from %s', MLF_TEXT_DOMAIN), wp_post_revision_title( (int) $_GET['revision'], false ) ) : false,
         6 => sprintf( __('Slide published. <a href="%s">View slide</a>'), esc_url( get_permalink($post_ID) ) ),
-        7 => __('Slide saved.'),
+        7 => __('Slide saved.', MLF_TEXT_DOMAIN),
         8 => sprintf( __('Slide submitted. <a target="_blank" href="%s">Preview slide</a>'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
         9 => sprintf( __('Slide scheduled for: <strong>%1$s</strong>. <a target="_blank" href="%2$s">Preview slide</a>'),
             // translators: Publish box date format, see http://php.net/date
-            date_i18n( __( 'M j, Y @ G:i' ), strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
+            date_i18n( 'M j, Y @ G:i', strtotime( $post->post_date ) ), esc_url( get_permalink($post_ID) ) ),
         10 => sprintf( __('Slide draft updated. <a target="_blank" href="%s">Preview slide</a>'), esc_url( add_query_arg( 'preview', 'true', get_permalink($post_ID) ) ) ),
     );
 
@@ -201,7 +201,12 @@ function mlfSliderHTMLShortcode($atts) {
         'category' => ''
     ), $atts ), EXTR_OVERWRITE /* overwrite existing vars */ );
 
-    return mlfGetSliderHTML($category, 10, true, MLF_SIZE_MD);
+    $size = MLF_SIZE_MD;
+    if( of_get_option('full_width_container') ) {
+        $size = MLF_SIZE_LG;
+    }
+
+    return mlfGetSliderHTML($category, 10, true, $size);
 }
 
 function mlfRegisterSliderShortcode() {

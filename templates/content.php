@@ -1,4 +1,4 @@
-
+<!-- templates/content.php -->
 <article <?php post_class(); ?>>
     <header> <?php
         $post_thumb = wp_get_attachment_image_src(get_post_thumbnail_id(), MLF_THUMBNAIL_IMG);

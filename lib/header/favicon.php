@@ -1,5 +1,6 @@
 <?php
 
+add_action('ci_meta', 'printFavicon');
 function printFavicon() {
     $favicon = esc_url( of_get_option("favicon", '') );
     if( $favicon ) { ?>

@@ -37,34 +37,52 @@ function mlfRegisterRequiredPlugins() {
 
         // Include a plugin from the WordPress Plugin Repository
         array(
-            'name' 		=> 'Meta Box',
-            'slug' 		=> 'meta-box',
-            'required' 	=> true,
+            'name'     => 'Meta Box',
+            'slug'     => 'meta-box',
+            'required' => true,
         ),
         array(
-            'name' 		=> 'Contact Form 7',
-            'slug' 		=> 'contact-form-7',
-            'required' 	=> false,
+            'name'     => 'Contact Form 7',
+            'slug'     => 'contact-form-7',
+            'required' => false,
         ),
         array(
-            'name' 		=> 'Newsletter Sign-Up',
-            'slug' 		=> 'newsletter-sign-up',
-            'required' 	=> false,
+            'name'     => 'Newsletter Sign-Up',
+            'slug'     => 'newsletter-sign-up',
+            'required' => false,
         ),
         array(
-            'name' 		=> 'WordPress SEO by Yoast',
-            'slug' 		=> 'wordpress-seo',
-            'required' 	=> false,
+            'name'     => 'WordPress SEO by Yoast',
+            'slug'     => 'wordpress-seo',
+            'required' => false,
         ),
         array(
-            'name' 		=> 'Google Maps Widget',
-            'slug' 		=> 'google-maps-widget',
-            'required' 	=> false,
+            'name'     => 'Google Maps Widget',
+            'slug'     => 'google-maps-widget',
+            'required' => false,
         ),
         array(
-            'name' 		=> 'Testimonials by Aihrus',
-            'slug' 		=> 'testimonials-widget',
-            'required' 	=> false,
+            'name'     => 'Testimonials by Aihrus',
+            'slug'     => 'testimonials-widget',
+            'required' => false,
+        ),
+        array(
+            'name'     => 'Attorneys Custom Post Type Plugin', // The plugin name.
+            'slug'     => 'ci-attorneys-cpt', // The plugin slug (typically the folder name).
+            'source'   => 'http://conversioninsights.net/downloads/plugins/ci-attorneys-cpt.zip', // The plugin source.
+            'required' => true, // If false, the plugin is only 'recommended' instead of required.
+        ),
+        array(
+            'name'     => 'Practice Areas Custom Post Type Plugin', // The plugin name.
+            'slug'     => 'ci-practice-areas-cpt', // The plugin slug (typically the folder name).
+            'source'   => 'http://conversioninsights.net/downloads/plugins/ci-practice-areas-cpt.zip', // The plugin source.
+            'required' => true, // If false, the plugin is only 'recommended' instead of required.
+        ),
+        array(
+            'name'     => 'Slides Custom Post Type Plugin', // The plugin name.
+            'slug'     => 'ci-slides-cpt', // The plugin slug (typically the folder name).
+            'source'   => 'http://conversioninsights.net/downloads/plugins/ci-slides-cpt.zip', // The plugin source.
+            'required' => true, // If false, the plugin is only 'recommended' instead of required.
         ),
     );
 

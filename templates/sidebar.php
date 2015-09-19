@@ -1,3 +1,4 @@
+<!-- templates/sidebar.php -->
 <?php
 
 global $ciSidebars;

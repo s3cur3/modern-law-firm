@@ -27,19 +27,36 @@
 
             editor.addCommand('columns', function () {
                 var numCols = parseInt( prompt("How many columns do you want? ", "3") );
-                if( numCols >= 2 && numCols <= 12 ) {
+
+                var bootstrapColumnClasses = [
+                    "", // Zero columns doesn't make sense
+                    "col-sm-12", // 1 col
+                    "col-sm-6",  // 2 col
+                    "col-sm-4",  // 3 col
+                    "col-sm-3",
+                    "",          // 5 columns can't happen in a 12-col grid
+                    "col-sm-2",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "col-sm-1"
+                ];
+
+                if( bootstrapColumnClasses[numCols] ) {
                     var output = '<div class="row-fluid">';
                     numCols = parseInt(numCols);
                     var colWidth = 12 / numCols;
                     for( var i = 1; i <= numCols; i++ ) {
-                        output += '<div class="col-sm-' + colWidth + ' mb20 mt20"><p>Type column ' + + i + ' content here</p></div>';
+                        output += '<div class="' + bootstrapColumnClasses[numCols] + ' mb20 mt20"><p>Type column ' + + i + ' content here</p></div>';
                     }
 
                     output += "</div><div class=\"clr\"></div>";
                     editor.execCommand('mceInsertContent', 0, output);
                 }
                 else {
-                    editor.execCommand('mceInsertContent', 0, "That number of columns is invalid. Please enter a number between 2 and 12.");
+                    editor.execCommand('mceInsertContent', 0, "That number of columns is invalid. Please enter a number between 1, 2, 3, 4, 6, or 12.");
                 }
             });
 
@@ -203,7 +220,7 @@
                 if( selected_text.indexOf("<h") === -1 ) { // no headings
                     selected_text = '<p>' + selected_text + '</p>';
                 }
-                var return_text = '<div class="inverted jumbo-band">' + selected_text + '</span>';
+                var return_text = '<div class="inverted jumbo-band no-pad">' + selected_text + '</span>';
                 editor.execCommand('mceInsertContent', 0, return_text);
             });
 
@@ -306,13 +323,13 @@
                             <label for="showMore">Show "more" link after excerpt?</label>\
                             <input type="checkbox" id="showMore" />\
                         </div>\
-                        <button id="insert-all" type="button" class="btn btn-primary">Insert practice areas</button>');
+                        <button id="insert-attorneys" type="button" class="btn btn-primary">Insert practice areas</button>');
                 }
                 modal.modal('show');
 
-                var pre = '<div class="practicearea-insert"><p>';
+                var pre = '<p>&nbsp;</p><div class="practicearea-insert"><p>';
                 var post = '</p></div><p>&nbsp;</p>';
-                modal.find("#insert-all").click(function() {
+                modal.find("#insert-attorneys").click(function() {
                     var pa = ( modal.find('#numPracticeAreas').val() != "" ? modal.find('#numPracticeAreas').val() : 100 );
                     var listOnly = modal.find('#listOnly').prop('checked');
                     var more = modal.find('#showMore').prop('checked');
@@ -339,7 +356,7 @@
                 if( cat == "" || cat == null ) {
                     catShortcode = "";
                 }
-                editor.execCommand('mceInsertContent', 0, '<div class="slider-insert">[slider ' + catShortcode + '/]</div><p></p>');
+                editor.execCommand('mceInsertContent', 0, '<div class="slider-insert no-pad">[slider ' + catShortcode + '/]</div><p></p>');
             });
         },
 
