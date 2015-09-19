@@ -1,3 +1,4 @@
+<!-- index.php -->
 <?php get_template_part('templates/page', 'header-archive'); ?>
 
 <?php if (!have_posts()) { ?>

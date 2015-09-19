@@ -34,10 +34,16 @@ require_once locate_template('/lib/theme/cleanup.php');
 require_once locate_template('/lib/header/nav.php');
 // Custom favicon
 require_once locate_template('/lib/header/favicon.php');
+// Load custom Google Fonts
+require_once locate_template('/lib/header/addGoogleFonts.php');
+// Add the custom CSS to the page <head>
+require_once locate_template('/lib/appearance/customCSS.php');
+// Add the <style> tags to set font-families
+require_once locate_template('/lib/appearance/googleFontsStyles.php');
+// Tools for setting up the full-width layout
+require_once locate_template('/lib/appearance/fullWidthLayout.php');
 // Breadcrumbs in the page headers
 require_once locate_template('/lib/header/breadbrumbs.php');
-// Custom post type framework
-require_once locate_template('/lib/content/cptFramework.php');
 // Boilerplate Google Privacy Policy
 require_once locate_template('/lib/content/google-privacy-policy.php');
 // Custom [gallery] modifications
@@ -48,6 +54,8 @@ require_once locate_template('/lib/content/comments.php');
 require_once locate_template('/lib/theme/relative-urls.php');
 // Sidebars and widgets
 require_once locate_template('/lib/content/sidebar/widgets.php');
+// Variables needed by the Javascript
+require_once locate_template('/lib/header/javascriptVars.php');
 // Scripts and stylesheets
 require_once locate_template('/lib/scripts.php');
 
@@ -65,12 +73,15 @@ require_once locate_template('/lib/appearance/colors.php');
 require_once locate_template('/lib/content/sidebar/social.php');
 // Print credits for the theme
 require_once locate_template('/lib/content/footer/credit.php');
+/* DEPRECATED: Post types are now created by plugins.
+// Custom post type framework
+require_once locate_template('/lib/content/cptFramework.php');
 // Create slides post type
 require_once locate_template('/lib/content/slider.php');
 // Create attorneys post type
 require_once locate_template('/lib/content/attorneys.php');
 // Create practice areas post type
-require_once locate_template('/lib/content/practiceAreas.php');
+require_once locate_template('/lib/content/practiceAreas.php'); */
 // Enables special features of the TinyMCE editor
 require_once locate_template('/lib/admin/editor.php');
 // Add custom meta boxes to the admin site
@@ -95,7 +106,7 @@ require_once locate_template('/lib/content/featured-image-attribution/featured-i
 require_once 'lib/theme/theme-updates/theme-update-checker.php';
 $example_update_checker = new ThemeUpdateChecker(
     MLF_SLUG,
-    'http://conversioninsights.net/downloads/themes/mlf_version_metadata.json'
+    'http://conversioninsights.net/downloads/themes/mlf-premium_version_metadata.json'
 );
 
 
@@ -121,7 +132,7 @@ add_filter( 'upload_mimes', 'ciAllowSVGUploads' );
  */
 function mlfGetNormalizedMeta( $fieldID, $valueIfNotSet, $overridePostID=null ) {
     if( function_exists('rwmb_meta') ) {
-        $field = rwmb_meta( THEME_PREFIX . "_{$fieldID}", array(), $overridePostID );
+        $field = rwmb_meta( MLF_THEME_PREFIX . "_{$fieldID}", array(), $overridePostID );
         if( $field === "" ) {
             $field = $valueIfNotSet;
         }

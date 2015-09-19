@@ -1,0 +1,10 @@
+{
+    "name" : "Attorneys Custom Post Type",
+    "slug" : "ci-attorneys-cpt",
+    "download_url" : "http://conversioninsights.net/downloads/plugins/ci-attorneys-cpt.zip",
+    "version" : "1.03",
+    "author" : "Tyler Young",
+    "sections" : {
+        "description" : "Adds an attorney post type for your theme to use."
+    }
+}
