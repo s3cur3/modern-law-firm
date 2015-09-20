@@ -33,6 +33,7 @@ function mlfHandlePracticeAreaShortcode( $atts, $content="" ) {
     $length = 250;
     $columns = 4;
     $more = false;
+    $mb = 30;
     extract(
         shortcode_atts(
             array(
@@ -40,13 +41,14 @@ function mlfHandlePracticeAreaShortcode( $atts, $content="" ) {
                 'max'     => $max,
                 'length'  => $length,
                 'columns' => $columns,
-                'more'    => $more
+                'more'    => $more,
+                'mb' => $mb
             ), ciNormalizeShortcodeAtts($atts), 'practiceareas' ) );
 
     if( $list ) {
         return mlfGetPracticeAreasTitlesList($max);
     } else {
-        return mlfGetPracticeAreasHTML($max, 3, $length, true, $columns, $more);
+        return mlfGetPracticeAreasHTML($max, 3, $length, true, $columns, $more, $mb);
     }
 }
 
@@ -75,73 +77,80 @@ function mlfGetPracticeAreasTitlesList( $maxAreas ) {
  * @param $useImages boolean For posts that have a featured image, should we display that image?
  * @param $columns int The number of columns to format the practice areas into
  * @param $more boolean True if we should use a "Read more." link; false if we should simply link the titles
+ * @param $mb int Bottom margin, in px
  * @return string The HTML to be output
  */
-function mlfGetPracticeAreasHTML( $numPracticeAreas = 100,
-                                  $headingLevel = 3,
-                                  $maxCharLength = -1,
-                                  $useImages=true,
-                                  $columns=1,
-                                  $more=false ) {
-    function getPracticeAreaInnerHTML( $practiceArea, $headingLevel, $floatImg="right", $useImages, $more ) {
-        $imgClass = "practice-area-img";
-        if( $floatImg == "right" ) {
-            $imgClass .= " alignright ml20";
-        } else if( $floatImg == "left" ) {
-            $imgClass .= " alignleft mr20";
+if( !function_exists('mlfGetPracticeAreasHTML') ) {
+    function mlfGetPracticeAreasHTML( $numPracticeAreas = 100,
+                                      $headingLevel = 3,
+                                      $maxCharLength = -1,
+                                      $useImages=true,
+                                      $columns=1,
+                                      $more=false,
+                                      $mb = 30 ) {
+        if( !function_exists('mlfGetPracticeAreaInnerHTML') ) {
+            function mlfGetPracticeAreaInnerHTML( $practiceArea, $headingLevel, $floatImg="right", $useImages, $more ) {
+                $imgClass = "practice-area-img";
+                if( $floatImg == "right" ) {
+                    $imgClass .= " alignright ml20";
+                } else if( $floatImg == "left" ) {
+                    $imgClass .= " alignleft mr20";
+                }
+
+                $out = "";
+                $aHREF = "<a href=\"{$practiceArea['url']}\">";
+                if( $useImages && strlen($practiceArea['imgURL']) > 0 ) {
+                    $out  .= "    $aHREF<img alt=\"{$practiceArea['title']}\" src=\"{$practiceArea['imgURL']}\" width=\"{$practiceArea['imgWidth']}\" height=\"{$practiceArea['imgHeight']}\" class=\"{$imgClass}\"></a>\n";
+                }
+
+
+                $title = $practiceArea['title'];
+                if( !$more ) {
+                    $title = "{$aHREF}$title</a>";
+                }
+
+                if( $headingLevel > 0 ) {
+                    $out .= "    <h{$headingLevel}>$title</h{$headingLevel}>\n";
+                } else {
+                    $out .= "    <strong>$title</strong>\n";
+                }
+
+                $out .= "    {$practiceArea['content']}\n";
+
+                if( $more ) {
+                    $out .= "{$aHREF}Learn more...</a>";
+                }
+
+                return $out;
+            }
         }
 
-        $out = "";
-        $aHREF = "<a href=\"{$practiceArea['url']}\">";
-        if( $useImages && strlen($practiceArea['imgURL']) > 0 ) {
-            $out  .= "    $aHREF<img alt=\"{$practiceArea['title']}\" src=\"{$practiceArea['imgURL']}\" width=\"{$practiceArea['imgWidth']}\" height=\"{$practiceArea['imgHeight']}\" class=\"{$imgClass}\"></a>\n";
+
+        $practiceAreas = ciGetPostsOfType( MLF_PRACTICE_AREA_TYPE, $maxCharLength, array(1000,1000), $numPracticeAreas );
+
+        if( count($practiceAreas) == 0 ) {
+            return "";
         }
 
+        $divClass = "practice-areas" . ($columns > 1 ? " row mb" . strval(intval($mb)) : "");
+        $liClass = "practice-area " . ($columns > 1 ? ciGetColumnClass($columns) : "") ;
 
-        $title = $practiceArea['title'];
-        if( !$more ) {
-            $title = "{$aHREF}$title</a>";
-        }
-
-        if( $headingLevel > 0 ) {
-            $out .= "    <h{$headingLevel}>$title</h{$headingLevel}>\n";
+        $out = "\n<!-- Practice areas -->\n";
+        $out .= "<div class=\"{$divClass}\">";
+        if( count($practiceAreas) > 1 ) {
+            $out .= "<ul class=\"no-bullet\">\n";
+            for( $i = 0; $i < count($practiceAreas); $i++ ) {
+                $out .= "<li class=\"{$liClass}\">\n";
+                $out .= mlfGetPracticeAreaInnerHTML($practiceAreas[$i], $headingLevel, "none", $useImages, $more);
+                $out .= "</li>\n";
+            }
+            $out .= "</ul>\n";
         } else {
-            $out .= "    <strong>$title</strong>\n";
+            $out .= mlfGetPracticeAreaInnerHTML($practiceAreas[0], $headingLevel, "right", $useImages, $more);
         }
-
-        $out .= "    {$practiceArea['content']}\n";
-
-        if( $more ) {
-            $out .= "{$aHREF}Learn more...</a>";
-        }
-
+        $out .= "</div>";
         return $out;
     }
-
-
-    $practiceAreas = ciGetPostsOfType( MLF_PRACTICE_AREA_TYPE, $maxCharLength, array(1000,1000), $numPracticeAreas );
-
-    if( count($practiceAreas) == 0 ) {
-        return "";
-    }
-
-    $divClass = "practice-areas" . ($columns > 1 ? " row mb30" : "");
-    $liClass = "practice-area " . ($columns > 1 ? ciGetColumnClass($columns) : "") ;
-
-    $out = "<div class=\"{$divClass}\">";
-    if( count($practiceAreas) > 1 ) {
-        $out .= "<ul class=\"no-bullet\">\n";
-        for( $i = 0; $i < count($practiceAreas); $i++ ) {
-            $out .= "<li class=\"{$liClass}\">\n";
-            $out .= getPracticeAreaInnerHTML($practiceAreas[$i], $headingLevel, "none", $useImages, $more);
-            $out .= "</li>\n";
-        }
-        $out .= "</ul>\n";
-    } else {
-        $out .= getPracticeAreaInnerHTML($practiceAreas[0], $headingLevel, "right", $useImages, $more);
-    }
-    $out .= "</div>";
-    return $out;
 }
 
 
