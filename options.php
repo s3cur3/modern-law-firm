@@ -389,6 +389,20 @@ function optionsframework_options() {
             true => 'Yes, make the disclaimer full-width'
         ));
 
+    $options[] = array(
+        'name' => __('Show copyright text?', MLF_TEXT_DOMAIN),
+        'desc' => __('If checked, prints a copyright notice beneath your disclaimer.', MLF_TEXT_DOMAIN),
+        'id' => 'mlf_copyright_text',
+        'std' => '1',
+        'type' => 'checkbox');
+
+    $options[] = array(
+        'name' => __('Show theme attribution?', MLF_TEXT_DOMAIN),
+        'desc' => __('If checked, prints a credit for the theme\'s developers beneath your disclaimer.', MLF_TEXT_DOMAIN),
+        'id' => 'mlf_theme_credit',
+        'std' => '1',
+        'type' => 'checkbox');
+
     /**************************************************************
                 Documentation
      ***************************************************************/

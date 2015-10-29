@@ -19,9 +19,16 @@ if( of_get_option('disclaimer_full_width', false) ) {
 ?>
 <div class="container content-info" role="contentinfo">
     <div class="row">
-        <div class="col-lg-<?php echo $disclaimerWidth; ?>">
-            <?php mlfPrintDisclaimer(); ?>
-            <p>&copy; <?php echo date('Y'); ?> <?php echo do_shortcode(get_bloginfo('name')); ?> | <?php ciPrintThemeCredit(); ?></p>
+        <div class="col-lg-<?php echo $disclaimerWidth; ?>"><?php
+            mlfPrintDisclaimer();
+
+            if(of_get_option('mlf_copyright_text', true) && of_get_option('mlf_theme_credit', true)) { ?>
+                <p>&copy; <?php echo date('Y') . " " . do_shortcode(get_bloginfo('name')); ?> | <?php ciPrintThemeCredit(); ?></p> <?php
+            } elseif(of_get_option('mlf_copyright_text', true)) { ?>
+                <p>&copy; <?php echo date('Y') . " " . do_shortcode(get_bloginfo('name')); ?></p> <?php
+            } elseif(of_get_option('mlf_theme_credit', true)) { ?>
+                <p><?php ciPrintThemeCredit(); ?></p> <?php
+            } ?>
         </div>
     </div>
 </div>
