@@ -96,12 +96,12 @@ The home page in the demo consists of a number of different elements. Understand
 ![Elements of the home page](img/home-page-annotated.png)
 
 1. Firm name/logo
-    - By default, this is a plain-text version of your site title (defined on your Settings > General page.
+    - By default, this is a plain-text version of your site title (defined on your Settings > General page).
     - Alternatively, you can use your own logo (an image file). Upload the image using the **Appearance (advanced)** tab of the Theme Options. Note that the recommended image size is 300&times;37px.
 2. Navigation
     - Like most themes, we use the WordPress menu system for navigation menus.
     - You can set up your menus using the Appearance > Menus page.
-    - By default, the theme create a Primary Navigation menu and assign it to the Primary Navigation theme location (that is, the location at the top-right of the page).
+    - By default, the theme creates a Primary Navigation menu and assigns it to the Primary Navigation theme location (that is, the location at the top-right of the page).
 3. Image slider
     - The image slider has 2 parts: the individual slides (which can be managed just like posts or pages) and the on-page code which pulls together a collection of slides into a complete slider. See the section [Image sliders](#imagesliders) below for more information.
 4. Text blocks
@@ -398,6 +398,9 @@ Updates to the Theme
 ------------------------------------------------------
 
 Here's what's been added to the theme through updates:
+
+### Version 1.34
+Lots of bug fixes, plus the ability to turn off the copyright and credit text in the footer.
 
 ### Version 1.1
 #### New features
