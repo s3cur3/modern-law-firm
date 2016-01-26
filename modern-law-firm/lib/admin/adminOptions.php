@@ -11,6 +11,12 @@
 function mlfRegisterMetaBoxes( $meta_boxes ) {
     global $ciSidebars;
     reset($ciSidebars);
+
+    $sidebars = array();
+    foreach($GLOBALS['wp_registered_sidebars'] as $sidebar) {
+        $sidebars[$sidebar['id']] = $sidebar['name'];
+    }
+
     /**
      * Prefix of meta keys (optional)
      * Use underscore (_) at the beginning to make keys hidden
@@ -134,10 +140,10 @@ function mlfRegisterMetaBoxes( $meta_boxes ) {
                 'id'       => "{$prefix}sidebar",
                 'type'     => 'select',
                 // Array of 'value' => 'Label' pairs for select box
-                'options'  => $ciSidebars,
+                'options'  => $sidebars,
                 // Select multiple values, optional. Default is false.
                 'multiple'    => false,
-                'std'         => key($ciSidebars),
+                'std'         => key($sidebars),
                 'placeholder' => __( 'Select an Item', MLF_TEXT_DOMAIN ),
             ),
             // Top-of-page image slider
