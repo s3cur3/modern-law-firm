@@ -27,43 +27,45 @@ add_shortcode('practiceareas', 'mlfHandlePracticeAreaShortcode');
  * @param array $atts
  * @param string $content
  */
-function mlfHandlePracticeAreaShortcode( $atts, $content="" ) {
-    $list = false;
-    $max = 1000;
-    $length = 250;
-    $columns = 4;
-    $more = false;
-    $mb = 30;
-    extract(
-        shortcode_atts(
-            array(
-                'list'    => $list,
-                'max'     => $max,
-                'length'  => $length,
-                'columns' => $columns,
-                'more'    => $more,
-                'mb' => $mb
-            ), ciNormalizeShortcodeAtts($atts), 'practiceareas' ) );
+if(!function_exists('mlfHandlePracticeAreaShortcode')) {
+    function mlfHandlePracticeAreaShortcode( $atts, $content="" ) {
+        $list = false;
+        $max = 1000;
+        $length = 250;
+        $columns = 4;
+        $more = false;
+        $mb = 30;
+        extract(
+            shortcode_atts(
+                array(
+                    'list'    => $list,
+                    'max'     => $max,
+                    'length'  => $length,
+                    'columns' => $columns,
+                    'more'    => $more,
+                    'mb' => $mb
+                ), ciNormalizeShortcodeAtts($atts), 'practiceareas' ) );
 
-    if( $list ) {
-        return mlfGetPracticeAreasTitlesList($max);
-    } else {
-        return mlfGetPracticeAreasHTML($max, 3, $length, true, $columns, $more, $mb);
+        if( $list ) {
+            return mlfGetPracticeAreasTitlesList($max);
+        } else {
+            return mlfGetPracticeAreasHTML($max, 3, $length, true, $columns, $more, $mb);
+        }
     }
 }
 
+if(!function_exists('mlfGetPracticeAreasTitlesList')) {
+    function mlfGetPracticeAreasTitlesList($maxAreas) {
+        $practiceAreas = ciGetPostsOfType(MLF_PRACTICE_AREA_TYPE, 1, array(), $maxAreas);
 
-function mlfGetPracticeAreasTitlesList( $maxAreas ) {
-    $practiceAreas = ciGetPostsOfType( MLF_PRACTICE_AREA_TYPE, 1, array(), $maxAreas );
-
-    $out = "<ul class=\"practice-areas\">";
-    foreach( $practiceAreas as $practiceArea ) {
-        $out .= "<li><a href=\"{$practiceArea['url']}\">{$practiceArea['title']}</a></li>";
+        $out = "<ul class=\"practice-areas\">";
+        foreach($practiceAreas as $practiceArea) {
+            $out .= "<li><a href=\"{$practiceArea['url']}\">{$practiceArea['title']}</a></li>";
+        }
+        $out .= "</ul>";
+        return $out;
     }
-    $out .= "</ul>";
-    return $out;
 }
-
 
 
 
