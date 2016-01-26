@@ -48,9 +48,9 @@ To install the theme, do the following:
 
 1. Log in to the WordPress admin menu, typically found at `yoursitehere.com/wp-admin/`
 2. Click **Appearance** in the left-hand menu. This will load the theme selection page.
-3. Near the top of the page, just to the right of the word "Themes", click the **Add new** button.
-4. In the search box, type the name of this theme.
-5. Click the **Install Now** link below the theme you want to install.
+3. Near the top of the page, just to the right of the word "Themes", click the **Add New** button.
+4. Near the top of the page, just to the right of "Add Themes," click the **Upload Theme** button.
+5. Select the `modern-law-firm.zip` file from your computer and click **Install Now**.
 6. When the installation finishes, click the **Activate** link that appears.
 7. Immediately upon activating, WordPress will prompt you to make a number of changes (create a static front page, change permalink structure, and so on). **If you are creating a *new* site**, it is recommended that you say "yes" to each of these, then press the **Save Changes** button. If you are changing the theme of an existing site, you may not want to do this.
 8. Finally, after activating the theme, there will be a number of "recommended plugins" displayed at the top of the administration pages. See the following section for help installing those plugins.
