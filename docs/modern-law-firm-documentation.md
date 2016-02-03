@@ -399,6 +399,13 @@ Updates to the Theme
 
 Here's what's been added to the theme through updates:
 
+
+### Version 1.36
+Fixes for styling other sidebars.
+
+### Version 1.35
+You can now select *any* sidebar for a page, rather than just the ones created by the theme.
+
 ### Version 1.34
 Lots of bug fixes, plus the ability to turn off the copyright and credit text in the footer.
 
