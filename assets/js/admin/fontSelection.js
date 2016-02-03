@@ -3,41 +3,43 @@
 
     /**
      * Checks to see whether this string contains the sought substring (or substrings).
+     * @param s {string} The string to examine
      * @param search {string|Array} If search is a string, we will see if it is a substring of this string. If search
      *                              is an array of strings, we will see if any of those strings are substrings of this.
      * @returns {boolean} True if this string contains the searched string(s).
      */
-    String.prototype.contains = function(search) {
+    function stringContains(s, search) {
         if( typeof search == "string" ) {
-            return this.indexOf(search) > -1;
+            return s.indexOf(search) > -1;
         } else if( search instanceof Array ) {
             for( var i = 0; i < search.length; i++ ) {
-                if( this.indexOf(search[i]) > -1 ) {
+                if( s.indexOf(search[i]) > -1 ) {
                     return true;
                 }
             }
             return false;
         }
         return false;
-    };
+    }
 
     /**
      * See if an array of strings contains a particular substring
+     * @param arr {Array}
      * @param search {string}
      * @returns {boolean}
      */
-    Array.prototype.contains = function(search) {
+    function arrayContains(arr, search) {
         for( var i = 0; i < this.length; i++ ) {
-            if( this[i].contains(search) ) {
+            if( stringContains(arr[i], search) ) {
                 return true;
             }
         }
         return false;
-    };
+    }
 
-    Array.prototype.containsExactly = function(search) {
-        return this.indexOf(search) > -1;
-    };
+    function arrayContainsExactly(arr, search) {
+        return arr.indexOf(search) > -1;
+    }
 
     function sizeOf( obj ) {
         var size = 0;
@@ -66,7 +68,7 @@
 
     function getFontVariantFromLongID(stringIdentifier) {
         var weight = stringIdentifier.replace(/[^0-9]/g, '');
-        var italic = stringIdentifier.contains('italic');
+        var italic = stringContains(stringIdentifier, 'italic');
         return weight.toString() + (italic ? "italic" : '');
     }
 
@@ -130,10 +132,10 @@
 
 
                 console.log(fontName + " variants contains " + thisVariant + " ?");
-                console.log(availableVariants.containsExactly(thisVariant));
+                console.log(arrayContainsExactly(availableVariants, thisVariant));
                 console.log("Available variants: ");
                 console.log(availableVariants);
-                if( availableVariants.containsExactly(thisVariant) ) {
+                if( arrayContainsExactly(availableVariants, thisVariant) ) {
                     $(this).show();
                     $(this).prev().show();
                     $(this).css('font-family', '"' + fontName + '"');
@@ -148,7 +150,7 @@
     }
 
     $(document).ready(function () {
-        if( window.location.href.contains('page=options-framework') ) {
+        if( stringContains(window.location.href, 'page=options-framework') ) {
             var prefix = "the_modern_law_firm-";
             var fontLocations = ['title', 'heading', 'widget_title', 'body'];
             var variants = [
@@ -173,7 +175,7 @@
                         $("#section-" + loc + "_font_variants .controls label").each(function() {
                             var name = $(this).text();
                             var weight = name.replace(/[^0-9]/g, '');
-                            var italic = name.contains('italic');
+                            var italic = stringContains(name, 'italic');
 
                             $(this).css({
                                 'font-size': '16px',
