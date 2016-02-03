@@ -6,7 +6,10 @@
 <?php endwhile; ?>
 <?php
 
-$contentLength = 250;
+$contentLength = (int)ciGetNormalizedMeta('bio_excerpt_length', 250);
+if($contentLength <= 0) {
+    $contentLength = 250;
+}
 $attorneys = ciGetAllAttorneys(100, $contentLength);
 
 ?>
