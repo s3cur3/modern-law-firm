@@ -399,6 +399,8 @@ Updates to the Theme
 
 Here's what's been added to the theme through updates:
 
+### Version 1.37
+Added support for changing the length of attorney bio excerpts on a page using the All Attorneys template.
 
 ### Version 1.36
 Fixes for styling other sidebars.

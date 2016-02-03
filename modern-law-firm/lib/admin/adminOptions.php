@@ -1,5 +1,9 @@
 <?php
 
+function mlf_hide_attorney_bio_length() {
+    echo "<script>jQuery('#mlf_bio_excerpt_length').parent().parent().hide()</script>";
+}
+
 /**
  * Register meta boxes
  *
@@ -81,7 +85,7 @@ function mlfRegisterMetaBoxes( $meta_boxes ) {
                 // Value can be 0 or 1
                 'std' => 0,
             ),
-            // Taxonomy
+            // Slide category
             array(
                 // Field name - Will be used as label
                 'name'  => __( 'Show slides from this category at the top of the page (leave blank to show all)', MLF_TEXT_DOMAIN ),
@@ -95,8 +99,38 @@ function mlfRegisterMetaBoxes( $meta_boxes ) {
                 // CLONES: Add to make the field cloneable (i.e. have multiple value)
                 'clone' => false,
             ),
+
+            // Bio length
+            array(
+                'name'  => __( 'Length of attorney bio excerpts (characters)', MLF_TEXT_DOMAIN ),
+                'id'    => "{$prefix}bio_excerpt_length",
+                'type'  => 'number',
+                'min'  => 0,
+                'step' => 1,
+                'std'   => 250
+            )
         ),
     );
+
+
+    $post_id = -1;
+    if(array_key_exists('post', $_GET) && $_GET['post']) {
+        $post_id = $_GET['post'];
+    } elseif(array_key_exists('post_ID', $_POST) && $_POST['post_ID']) {
+        $post_id = $post_id = $_GET['post'];;
+    }
+    $showBioLengthField = false;
+    if($post_id >= 0) { // we're on an individual post page
+        $template_file = get_post_meta($post_id,'_wp_page_template',TRUE);
+        // check for a template type
+        if($template_file == 'template-attorneys.php') {
+            $showBioLengthField = true;
+        }
+    }
+
+    if(!$showBioLengthField) {
+        add_action('admin_footer', 'mlf_hide_attorney_bio_length');
+    }
 
     // Meta box for the attorneys custom post type
     $meta_boxes[] = array(
